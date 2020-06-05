@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Box{
+class Box extends StatelessWidget{
   int index;
   Color color;
   bool visited;
@@ -13,5 +13,16 @@ class Box{
     if(visited){
       this.color=c;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(this.isWall){
+      this.color = Colors.black;
+    }
+    return Container(
+      color: color,
+      child: Center(child: Text('Item $index',style: Theme.of(context).textTheme.headline5)),
+    );
   }
 }

@@ -11,17 +11,19 @@ class Game extends StatefulWidget{
 class GameState extends State<Game> {
   int _currentColorState = 0;
   var _onIndex = 0;
-  Color _currentColor = Colors.amber;
+  Color _currentColor = Colors.grey;
   Grid grid = new Grid(9, 3, true);
 
   _vertSwipe(SwipeDirection direction) {
     if(direction == SwipeDirection.down && grid.swipeCheck(direction, _onIndex, _currentColorState)){
-        setState((){
-          _onIndex+=grid.columns;
-          grid.boxes[_onIndex].visited=true;
-        });
+      setState((){
+        grid.boxes[_onIndex].color = _currentColor;
+        _onIndex+=grid.columns;
+        grid.boxes[_onIndex].visited=true;
+      });
     }else if(direction == SwipeDirection.up && grid.swipeCheck(direction, _onIndex, _currentColorState)) //swipe up
       setState((){
+        grid.boxes[_onIndex].color = _currentColor;
         _onIndex-=grid.columns;
         grid.boxes[_onIndex].visited=true;
       });
@@ -29,12 +31,14 @@ class GameState extends State<Game> {
 
   _horizontalSwipe(SwipeDirection direction) {
     if(direction == SwipeDirection.right && grid.swipeCheck(direction, _onIndex, _currentColorState)){ //right swipe
-        setState((){
-          _onIndex+=1;
-          grid.boxes[_onIndex].visited=true;
-        });
+      setState((){
+        grid.boxes[_onIndex].color = _currentColor;
+        _onIndex+=1;
+        grid.boxes[_onIndex].visited=true;
+      });
     }else if(direction == SwipeDirection.left && grid.swipeCheck(direction, _onIndex, _currentColorState)){ //left swipe
       setState((){
+        grid.boxes[_onIndex].color = _currentColor;
         _onIndex-=1;
         grid.boxes[_onIndex].visited=true;
       });
@@ -63,8 +67,22 @@ class GameState extends State<Game> {
             _currentColor=Colors.green;
             _currentColorState = 1;
           }
+          if(_onIndex==2){
+            _currentColor=Colors.blue;
+            _currentColorState = 2;
+          }
           if(index == _onIndex){
             return Container(color: _currentColor, child: Center(child: Icon(Icons.sentiment_neutral)));
+          }
+          if(index == 2){
+            if(grid.boxes[2].visited){
+              return Container(
+              color: Colors.blue,
+              child: Center(child: Icon(Icons.vpn_key)));
+            }
+            return Container(
+              color: Colors.white,
+              child: Center(child: Icon(Icons.vpn_key, color: Colors.blue)));
           }
           if(index == 6){
             if(grid.boxes[6].visited){
@@ -86,12 +104,9 @@ class GameState extends State<Game> {
               color: Colors.white,
               child: Center(child: Icon(Icons.lock, color: Colors.green)));
           }
-          return Container(
-            color: _setColor(index),
-            child: Center(child: Text('Item $index',style: Theme.of(context).textTheme.headline5)),
-          );
+          return grid.boxes[index];
         }),
-      ),
+      )
     );
   }
 }
