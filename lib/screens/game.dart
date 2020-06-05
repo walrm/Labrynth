@@ -25,7 +25,8 @@ class GameState extends State<Game> {
           _onIndex+=_columns;
           boxes[_onIndex].visited=true;
         });
-    }else if(_onIndex-_columns >=0 && !boxes[_onIndex-_columns].isWall) //swipe up
+    }else if(_onIndex-_columns >=0 && !boxes[_onIndex-_columns].isWall && 
+    (boxes[_onIndex-_columns].colorState==0 || boxes[_onIndex-_columns].colorState==_currentColorState)) //swipe up
       setState((){
         _onIndex-=_columns;
         boxes[_onIndex].visited=true;
@@ -35,12 +36,13 @@ class GameState extends State<Game> {
   _horizontalSwipe(SwipeDirection direction) {
     if(direction == SwipeDirection.right){
       if((_onIndex+1)%_columns != 0  && !boxes[_onIndex+1].isWall && 
-      (boxes[_onIndex+_columns].colorState==0 || boxes[_onIndex+_columns].colorState==_currentColorState)) //right swipe
+      (boxes[_onIndex+1].colorState==0 || boxes[_onIndex+1].colorState==_currentColorState)) //right swipe
         setState((){
           _onIndex+=1;
         boxes[_onIndex].visited=true;
         });
-    }else if(_onIndex%_columns != 0 && !boxes[_onIndex-1].isWall){ //left swipe
+    }else if(_onIndex%_columns != 0 && !boxes[_onIndex-1].isWall &&
+    (boxes[_onIndex-1].colorState==0 || boxes[_onIndex-1].colorState==_currentColorState)){ //left swipe
       setState((){
         _onIndex-=1;
         boxes[_onIndex].visited=true;
