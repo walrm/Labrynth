@@ -13,7 +13,11 @@ class MyApp extends StatelessWidget{
         appBar: AppBar(
           title: Text('Help')
         ),
-        body: Game()
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [Game()]
+        )
       ),
     );
   }
