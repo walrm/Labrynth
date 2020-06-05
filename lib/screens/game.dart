@@ -10,41 +10,47 @@ class GameState extends State<Game> {
   var _onIndex = 0;
   static int _gridSize = 4;
   static int _columns = 2;
-  var _numRows = _gridSize/_columns;
+  List<bool> visited = new List<bool>(_gridSize);
+
+  // var _numRows = _gridSize/_columns;
 
   void _vertSwipe(SwipeDirection direction) {
-    print("here");
+    if(direction == SwipeDirection.down){ //swipe down
+      if(_onIndex+_columns <= _gridSize-1) 
+        setState((){
+          _onIndex+=_columns;
+          print(visited);
+        });
+    }else if(_onIndex-_columns >=0) //swipe up
+      setState((){
+        _onIndex-=_columns;
+      });
   }
 
   void _horizontalSwipe(SwipeDirection direction) {
-    print("here");
+    if(direction == SwipeDirection.right){
+      if(_onIndex%_columns-1 != 0) //right swipe
+        setState((){
+          _onIndex+=1;
+        });
+    }else if(_onIndex%_columns != 0){ //left swipe
+      setState((){
+        _onIndex-=1;
+      });
+    }
   }
-
 
   @override
   Widget build(BuildContext context){
     return SimpleGestureDetector(
       onVerticalSwipe: _vertSwipe,
       onHorizontalSwipe: _horizontalSwipe,
-      // onHorizontalDragEnd: (details) {
-      //     if (details.primaryVelocity.compareTo(0) != -1) {
-      //       if(_onIndex%_columns-1 != 0) //right swipe
-      //       setState((){
-      //         _onIndex+=1;
-      //         print(_onIndex);
-      //       });
-      //     }else if(_onIndex%_columns != 0){ //left swipe
-      //       setState((){
-      //         _onIndex-=1;
-      //         print(_onIndex);
-      //       });
-      //     }
-      // },
       child: GridView.count(
+        physics: new NeverScrollableScrollPhysics(),
         crossAxisCount: _columns,
         children: List.generate(_gridSize, (index) {
           if(index == _onIndex){
-            return Center(child: Icon(Icons.sentiment_neutral));
+            return Container(color: Colors.amber, child: Center(child: Icon(Icons.sentiment_neutral)));
           }
           return InkWell(
             splashColor: Colors.blue.withAlpha(30),
