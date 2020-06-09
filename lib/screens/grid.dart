@@ -3,6 +3,9 @@ import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 import 'box.dart';
 
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
+
 class Grid{
   int size;
   int columns;
@@ -14,13 +17,27 @@ class Grid{
     for(int i=0; i<this.size; i++){
       boxes[i]=new Box(i,Colors.white,false,false,0);
     }
-    
+    init('data.txt');    
     //Temporary
     boxes[0].visited=true;
     boxes[1].isWall = true;
     boxes[8].colorState = 1;
   }
 
+  void init(String filename) async{
+    await readFile('data.txt');
+    print('done reading?');
+  }
+
+  Future<String> loadAsset(String filename) async {
+    return await rootBundle.loadString('assets/'+filename);
+  }
+
+  Future<void>  readFile(String filename) async{
+    String s= await loadAsset(filename);
+    print(s);
+  } 
+  
 
   bool swipeCheck(SwipeDirection direction, int _onIndex, int _currentColorState){
     if(direction == SwipeDirection.down){
