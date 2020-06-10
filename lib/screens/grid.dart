@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class Grid{
   int size;
+  int numLocks;
   int columns;
   bool isInit;
   List<Box> boxes;
@@ -24,9 +25,8 @@ class Grid{
     boxes[8].colorState = 1;
   }
 
-  void init(String filename) async{
+  Future<void> init(String filename) async{
     await readFile('data.txt');
-    print('done reading?');
   }
 
   Future<String> loadAsset(String filename) async {
@@ -35,7 +35,31 @@ class Grid{
 
   Future<void>  readFile(String filename) async{
     String s= await loadAsset(filename);
-    print(s);
+    int place=0;
+    String temp=s.substring(place,++place);
+    String sizes='';
+    while(temp!=' '){
+      print('temp in loop:');
+      print(temp);
+      sizes=sizes+temp;
+      print(place);
+      temp=s.substring(place,++place);
+    }
+
+    this.numLocks=int.parse(sizes);
+    print('Num locks:');
+    print(this.numLocks);
+    temp=s.substring(place,++place);
+    sizes='';
+    while(temp!=' '){
+      sizes=sizes+temp;
+      temp=s.substring(place,++place);
+    }
+    this.size=int.parse(sizes)*int.parse(sizes);
+    print('Size:');
+    print(this.size);
+    print('Num Locks');
+    print(this.numLocks);
   } 
   
 
