@@ -63,47 +63,47 @@ class GameState extends State<Game> {
         physics: new NeverScrollableScrollPhysics(),
         crossAxisCount: grid.columns,
         children: List.generate(grid.size, (index) {
-          if(_onIndex==6){
-            _currentColor=Colors.green;
-            _currentColorState = 1;
-          }
-          if(_onIndex==2){
-            _currentColor=Colors.blue;
-            _currentColorState = 2;
-          }
+          // if(_onIndex==6){
+          //   _currentColor=Colors.green;
+          //   _currentColorState = 1;
+          // }
+          // if(_onIndex==2){
+          //   _currentColor=Colors.blue;
+          //   _currentColorState = 2;
+          // }
           if(index == _onIndex){
             return Container(color: _currentColor, child: Center(child: Icon(Icons.sentiment_neutral)));
           }
-          if(index == 2){
-            if(grid.boxes[2].visited){
-              return Container(
-              color: Colors.blue,
-              child: Center(child: Icon(Icons.vpn_key)));
-            }
-            return Container(
-              color: Colors.white,
-              child: Center(child: Icon(Icons.vpn_key, color: Colors.blue)));
-          }
-          if(index == 6){
-            if(grid.boxes[6].visited){
-              return Container(
-              color: Colors.green,
-              child: Center(child: Icon(Icons.vpn_key)));
-            }
-            return Container(
-              color: Colors.white,
-              child: Center(child: Icon(Icons.vpn_key, color: Colors.green)));
-          }
-          if(index == 8){
-            if(grid.boxes[8].visited){
-              return Container(
-              color: Colors.green,
-              child: Center(child: Icon(Icons.lock)));
-            }
-            return Container(
-              color: Colors.white,
-              child: Center(child: Icon(Icons.lock, color: Colors.green)));
-          }
+          // if(index == 2){
+          //   if(grid.boxes[2].visited){
+          //     return Container(
+          //     color: Colors.blue,
+          //     child: Center(child: Icon(Icons.vpn_key)));
+          //   }
+          //   return Container(
+          //     color: Colors.white,
+          //     child: Center(child: Icon(Icons.vpn_key, color: Colors.blue)));
+          // }
+          // if(index == 6){
+          //   if(grid.boxes[6].visited){
+          //     return Container(
+          //     color: Colors.green,
+          //     child: Center(child: Icon(Icons.vpn_key)));
+          //   }
+          //   return Container(
+          //     color: Colors.white,
+          //     child: Center(child: Icon(Icons.vpn_key, color: Colors.green)));
+          // }
+          // if(index == 8){
+          //   if(grid.boxes[8].visited){
+          //     return Container(
+          //     color: Colors.green,
+          //     child: Center(child: Icon(Icons.lock)));
+          //   }
+          //   return Container(
+          //     color: Colors.white,
+          //     child: Center(child: Icon(Icons.lock, color: Colors.green)));
+          // }
           return grid.boxes[index];
         }),
       )

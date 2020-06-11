@@ -14,15 +14,15 @@ class Grid{
   List<Box> boxes;
 
   Grid(this.size, this.columns, this.isInit){
-    boxes = new List<Box>(this.size);
-    for(int i=0; i<this.size; i++){
-      boxes[i]=new Box(i,Colors.white,false,false,0);
-    }
+    // boxes = new List<Box>(this.size);
+    // for(int i=0; i<this.size; i++){
+    //   boxes[i]=new Box(i,Colors.white,false,false,0);
+    // }
     init('data.txt');    
     //Temporary
-    boxes[0].visited=true;
-    boxes[1].isWall = true;
-    boxes[8].colorState = 1;
+    // boxes[0].visited=true;
+    // boxes[1].isWall = true;
+    // boxes[8].colorState = 1;
   }
 
   Future<void> init(String filename) async{
@@ -33,33 +33,37 @@ class Grid{
     return await rootBundle.loadString('assets/'+filename);
   }
 
-  Future<void>  readFile(String filename) async{
-    String s= await loadAsset(filename);
-    int place=0;
-    String temp=s.substring(place,++place);
-    String sizes='';
-    while(temp!=' '){
-      print('temp in loop:');
-      print(temp);
-      sizes=sizes+temp;
-      print(place);
-      temp=s.substring(place,++place);
+  Future<void> readFile(String filename) async{
+    String s = await loadAsset(filename);
+    int i = 0;
+    while(s[i] != ' '){
+      i++;
+    }
+    i++;
+    String str = "";
+    while(s[i] != '\n'){
+      str += s[i];
+      i++;
+    }
+    int size = int.parse(str);
+    boxes = new List<Box>(size*size);
+    for(int l=0; l<boxes.length; l++){
+      boxes[l]=new Box(l,Colors.white,false,false,0);
     }
 
-    this.numLocks=int.parse(sizes);
-    print('Num locks:');
-    print(this.numLocks);
-    temp=s.substring(place,++place);
-    sizes='';
-    while(temp!=' '){
-      sizes=sizes+temp;
-      temp=s.substring(place,++place);
+    int j = 0;
+    for(i=i+1; i<s.length; i++){
+      print('char' + s[i]);
+        while(i!=s.length && s[i] != '\n'){
+          print(s[i]);
+          if(s[i] == '#'){
+            boxes[j].isWall = true;
+          }
+          j++;
+          i++;
+        }
+      i++;
     }
-    this.size=int.parse(sizes)*int.parse(sizes);
-    print('Size:');
-    print(this.size);
-    print('Num Locks');
-    print(this.numLocks);
   } 
   
 
