@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-0 2 @..?
-=======
 0 3
 @#?
 .#.
-...
->>>>>>> Stashed changes
+.#.
