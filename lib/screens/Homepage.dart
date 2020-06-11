@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'grid.dart';
 
 
 class Homepage extends StatefulWidget{
@@ -26,8 +27,24 @@ class Homestate extends State<Homepage> {
   }
   @override
   Widget build(BuildContext context) {
-    return SimpleGestureDetector(
-      onHorizontalSwipe: _horizontalSwipe,
+    return FutureBuilder<Grid>(
+          // future: OPTIONAL, function to get the future from
+          builder: (BuildContext context, AsyncSnapshot<Grid> snapshot){
+            return SimpleGestureDetector(
+              onHorizontalSwipe: _horizontalSwipe,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/ocean.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: null,
+              ),
+            );
+          }
     );
+      
+
   }
 }

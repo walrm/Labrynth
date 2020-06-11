@@ -1,4 +1,5 @@
 import 'package:Labrynth_test/screens/game.dart';
+import 'package:Labrynth_test/screens/Homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,12 +12,14 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Help')
+          // leading: //optional (left side app bar)
+          title: Text('Help'),
+          // actions: //optional (right side app bar)
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Game()]
+          children: [Homepage()]
         )
       ),
     );

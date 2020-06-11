@@ -5,7 +5,7 @@ import 'grid.dart';
 
 class Game extends StatefulWidget{
   @override
-  GameState createState() => GameState();
+  GameState createState() => GameState(); 
 }
 
 class GameState extends State<Game> {
