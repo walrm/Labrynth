@@ -12,18 +12,18 @@ class Homestate extends State<Homepage> {
   int currentWorld=0;
   int totalWorlds=10;
 
-  // _horizontalSwipe(SwipeDirection direction){
-  //   if(direction==SwipeDirection.left && currentWorld!=0){
-  //   setState(() {
-  //       currentWorld--;
-  //     });
-  //   }
-  //   else if(direction==SwipeDirection.right&&currentWorld+1<totalWorlds){
-  //     setState(() {
-  //       currentWorld++;
-  //     });
-  //   }
-  // }
+  _horizontalSwipe(SwipeDirection direction){
+    if(direction==SwipeDirection.left && currentWorld!=0){
+    setState(() {
+        currentWorld--;
+      });
+    }
+    else if(direction==SwipeDirection.right&&currentWorld+1<totalWorlds){
+      setState(() {
+        currentWorld++;
+      });
+    }
+  }
 
   PageController _controller = PageController(
     initialPage: 0,
