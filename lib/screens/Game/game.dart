@@ -4,15 +4,21 @@ import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'grid.dart';
 
 class Game extends StatefulWidget{
+  final Grid grid;
+
+  Game(this.grid);
+
   @override
-  GameState createState() => GameState(); 
+  GameState createState() => GameState(grid); 
 }
 
 class GameState extends State<Game> {
   int _currentColorState = 0;
   var _onIndex = 0;
   Color _currentColor = Colors.grey;
-  Grid grid = new Grid(9, 3, true);
+  Grid grid;
+
+  GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
     if(direction == SwipeDirection.down && grid.swipeCheck(direction, _onIndex, _currentColorState)){
@@ -52,10 +58,11 @@ class GameState extends State<Game> {
       return Colors.black;
     return Colors.white;
   }
-
   @override
   Widget build(BuildContext context){
-    return SimpleGestureDetector(
+    return Scaffold(
+      appBar: AppBar(title: Text('Game')),
+      body: SimpleGestureDetector(
       onVerticalSwipe: _vertSwipe,
       onHorizontalSwipe: _horizontalSwipe,
       child: GridView.count(
@@ -63,50 +70,14 @@ class GameState extends State<Game> {
         physics: new NeverScrollableScrollPhysics(),
         crossAxisCount: grid.columns,
         children: List.generate(grid.size, (index) {
-          // if(_onIndex==6){
-          //   _currentColor=Colors.green;
-          //   _currentColorState = 1;
-          // }
-          // if(_onIndex==2){
-          //   _currentColor=Colors.blue;
-          //   _currentColorState = 2;
-          // }
           if(index == _onIndex){
             return Container(color: _currentColor, child: Center(child: Icon(Icons.sentiment_neutral)));
           }
-          // if(index == 2){
-          //   if(grid.boxes[2].visited){
-          //     return Container(
-          //     color: Colors.blue,
-          //     child: Center(child: Icon(Icons.vpn_key)));
-          //   }
-          //   return Container(
-          //     color: Colors.white,
-          //     child: Center(child: Icon(Icons.vpn_key, color: Colors.blue)));
-          // }
-          // if(index == 6){
-          //   if(grid.boxes[6].visited){
-          //     return Container(
-          //     color: Colors.green,
-          //     child: Center(child: Icon(Icons.vpn_key)));
-          //   }
-          //   return Container(
-          //     color: Colors.white,
-          //     child: Center(child: Icon(Icons.vpn_key, color: Colors.green)));
-          // }
-          // if(index == 8){
-          //   if(grid.boxes[8].visited){
-          //     return Container(
-          //     color: Colors.green,
-          //     child: Center(child: Icon(Icons.lock)));
-          //   }
-          //   return Container(
-          //     color: Colors.white,
-          //     child: Center(child: Icon(Icons.lock, color: Colors.green)));
-          // }
           return grid.boxes[index];
-        }),
+        }
+      ),
       )
-    );
-  }
+    )
+  );
+}
 }

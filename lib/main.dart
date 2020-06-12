@@ -1,5 +1,5 @@
+import 'package:Labrynth_test/screens/Game/gameContainer.dart';
 import 'package:Labrynth_test/screens/Home/Homepage.dart';
-import 'package:Labrynth_test/screens/Game/game.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,19 +10,23 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          // leading: //optional (left side app bar)
-          title: Text('Help'),
-          // actions: //optional (right side app bar)
-        ),
-        body: Homepage(),
-        // body: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: [Game()]
-        // )
-      ),
+      // home: Scaffold(
+      //   appBar: AppBar(
+      //     // leading: //optional (left side app bar)
+      //     title: Text('Help'),
+      //     // actions: //optional (right side app bar)
+      //   ),
+      //   // body: Homepage(),
+      //   // body: Column(
+      //   //   mainAxisAlignment: MainAxisAlignment.center,
+      //   //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   //   children: [Game()]
+      //   // )
+      // ),
+      routes: {
+        '/': (context) => Homepage(),
+        '/game': (context) => GameContainer(),
+      }
     );
   }
 }

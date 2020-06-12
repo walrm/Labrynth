@@ -37,35 +37,37 @@ class Homestate extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        itemBuilder: (context, index) {
-          int currentWorld = index+1;
-          return Stack(
-            children: <Widget> [
-              Container(
-                child: Center(
-                  child: IconButton(
-                    iconSize: 120,
-                    icon: Icon(Icons.play_circle_outline, color:Colors.white),
-                    onPressed: (){
-                      
-                    },
-                  )
-                ),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/ocean.jpg"),
-                    fit: BoxFit.cover,
-                  ),
+    return Scaffold(
+      body: PageView.builder(
+      itemBuilder: (context, index) {
+        int currentWorld = index+1;
+        return Stack(
+          children: <Widget> [
+            Container(
+              child: Center(
+                child: IconButton(
+                  iconSize: 120,
+                  icon: Icon(Icons.play_circle_outline, color:Colors.white),
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/game');
+                  },
+                )
+              ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/ocean.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Container(
-                child: Text('$currentWorld/$totalWorlds', style: TextStyle(fontSize: 60.0, color: Colors.white))
-              ),
-            ]
-          );
-        },
+            ),
+            Container(
+              child: Text('$currentWorld/$totalWorlds', style: TextStyle(fontSize: 60.0, color: Colors.white))
+            ),
+          ]
+        );
+      },
       itemCount: 10, // Can be null
+      )
     );
   }
 }

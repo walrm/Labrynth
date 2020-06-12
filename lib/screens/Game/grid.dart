@@ -11,10 +11,9 @@ class Grid{
   int size;
   int numLocks;
   int columns;
-  bool isInit;
   List<Box> boxes;
 
-  Grid(this.size, this.columns, this.isInit){
+  Grid(){
     // boxes = new List<Box>(this.size);
     // for(int i=0; i<this.size; i++){
     //   boxes[i]=new Box(i,Colors.white,false,false,0);
@@ -46,7 +45,10 @@ class Grid{
       str += s[i];
       i++;
     }
+    
     int size = int.parse(str);
+    columns = size;
+    this.size = size*size;
     boxes = new List<Box>(size*size);
     for(int l=0; l<boxes.length; l++){
       boxes[l]=new Box(l,Colors.white,false,false,0);
@@ -54,9 +56,7 @@ class Grid{
 
     int j = 0;
     for(i=i+1; i<s.length; i++){
-      print('char' + s[i]);
         while(i!=s.length && s[i] != '\n'){
-          print(s[i]);
           if(s[i] == '#'){
             boxes[j].isWall = true;
           }
