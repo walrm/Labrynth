@@ -43,10 +43,25 @@ class Homestate extends State<Homepage> {
           return Stack(
             children: <Widget> [
               Container(
-                child: Center(child: Icon(Icons.play_circle_outline, size: 60.0)),
-                color: index%2==0? Colors.green: Colors.amber
+                child: Center(
+                  child: IconButton(
+                    iconSize: 120,
+                    icon: Icon(Icons.play_circle_outline, color:Colors.white),
+                    onPressed: (){
+                      
+                    },
+                  )
+                ),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/ocean.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              Container(child: Text('$currentWorld/$totalWorlds', style: TextStyle(fontSize: 60.0, color: Colors.white))),
+              Container(
+                child: Text('$currentWorld/$totalWorlds', style: TextStyle(fontSize: 60.0, color: Colors.white))
+              ),
             ]
           );
         },
