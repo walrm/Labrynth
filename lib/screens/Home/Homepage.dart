@@ -41,21 +41,43 @@ class Homestate extends State<Homepage> {
       body: PageView.builder(
       itemBuilder: (context, index) {
         int currentWorld = index+1;
+        Icon icon;
+        ImageProvider img;
+        bool goToGame;
+        if (currentWorld == 1){
+          icon = Icon(Icons.play_circle_outline, color:Colors.green);
+          img = AssetImage("assets/nature.jpg");
+          goToGame = true;
+        }
+        else if (currentWorld == 2){
+          icon = Icon(Icons.lock_outline, color:Colors.grey);
+          img = AssetImage("assets/ocean.jpg");
+          goToGame = false;
+
+        }
+        else{
+          icon = Icon(Icons.lock_outline, color:Colors.grey);
+          img = AssetImage("assets/ocean.jpg");
+          goToGame = false;
+        }
         return Stack(
           children: <Widget> [
             Container(
               child: Center(
                 child: IconButton(
                   iconSize: 120,
-                  icon: Icon(Icons.play_circle_outline, color:Colors.white),
+                  icon: icon,
                   onPressed: (){
-                    Navigator.pushNamed(context, '/game');
+                    if (goToGame){
+                      Navigator.pushNamed(context, '/game');
+                    }
+                    
                   },
                 )
               ),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/ocean.jpg"),
+                  image: img,
                   fit: BoxFit.cover,
                 ),
               ),
