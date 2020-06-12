@@ -24,6 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   simple_gesture_detector: ^0.1.4
+  shared_preferences: ^0.5.7+3
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -33,7 +35,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
