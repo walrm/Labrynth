@@ -58,6 +58,8 @@ class Homestate extends State<Homepage> {
                 if (currentWorld == 1){
                   icon = Icon(Icons.play_circle_outline, color:Colors.green);
                   img = AssetImage("assets/nature.jpg");
+                  print("Coins:");
+                  print(snapshot.data.coins);
                   goToGame = true;
                 }
                 else if (currentWorld == 2){
@@ -89,7 +91,6 @@ class Homestate extends State<Homepage> {
                                 }
                                 );
                             }
-                            
                           },
                         )
                       ),
