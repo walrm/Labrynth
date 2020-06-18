@@ -25,19 +25,20 @@ class Homestate extends State<Homepage> {
     super.dispose();
   }
 
-  Future<SaveState> initSaveState() async{
-    SaveState save=new SaveState();
+  Future<SaveState> initSaveState() async {
+    SaveState save = new SaveState();
     await save.init();
     widget.worlds[0] = new World();
     await widget.worlds[0].init();
     return save;
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SaveState>(
-      future: initSaveState(),
-      builder: (BuildContext context, AsyncSnapshot<SaveState> snapshot){
-        if(snapshot.hasData){
+        future: initSaveState(),
+        builder: (BuildContext context, AsyncSnapshot<SaveState> snapshot) {
+          if (snapshot.hasData) {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(0),
@@ -45,38 +46,36 @@ class Homestate extends State<Homepage> {
                   backgroundColor: Colors.black, // Set any color of status bar you want; or it defaults to your theme's primary color
                 )
               ),
-              body: PageView.builder(
-              itemBuilder: (context, index) {
-                int currentWorld = index+1;
-                Icon icon;
-                ImageProvider img;
-                bool goToGame;
-                if (currentWorld == 1){
-                  icon = Icon(Icons.play_circle_outline, color:Colors.green);
-                  img = AssetImage("assets/nature.jpg");
-                  print("Coins:");
-                  print(snapshot.data.coins);
-                  goToGame = true;
-                }
-                else if (currentWorld == 2){
-                  icon = Icon(Icons.lock_outline, color:Colors.grey);
-                  img = AssetImage("assets/ocean.jpg");
-                  goToGame = false;
-
-                }
-                else{
-                  icon = Icon(Icons.lock_outline, color:Colors.grey);
-                  img = AssetImage("assets/ocean.jpg");
-                  goToGame = false;
-                }
-                return Stack(
-                  children: <Widget> [
-                    Container(
-                      child: Center(
-                        child: IconButton(
+              body: Stack(children: <Widget>[
+                PageView.builder(
+                  itemBuilder: (context, index) {
+                    int currentWorld = index + 1;
+                    Icon icon;
+                    ImageProvider img;
+                    bool goToGame;
+                    if (currentWorld == 1) {
+                      icon =
+                          Icon(Icons.play_circle_outline, color: Colors.green);
+                      img = AssetImage("assets/nature.jpg");
+                      print("Coins:");
+                      print(snapshot.data.coins);
+                      goToGame = true;
+                    } else if (currentWorld == 2) {
+                      icon = Icon(Icons.lock_outline, color: Colors.grey);
+                      img = AssetImage("assets/ocean.jpg");
+                      goToGame = false;
+                    } else {
+                      icon = Icon(Icons.lock_outline, color: Colors.grey);
+                      img = AssetImage("assets/ocean.jpg");
+                      goToGame = false;
+                    }
+                    return Stack(children: <Widget>[
+                      Container(
+                        child: Center(
+                            child: IconButton(
                           iconSize: 120,
                           icon: icon,
-                          onPressed: (){
+                          onPressed: () {
                             if (goToGame){
                               // bool test=false;
                               // Navigator.pushNamed(
@@ -94,34 +93,128 @@ class Homestate extends State<Homepage> {
                                );
                               }
                           },
-                        )
+                        )),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: img,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: img,
-                          fit: BoxFit.cover,
+                      Container(
+                          child: Text('$currentWorld/$totalWorlds',
+                              style: TextStyle(
+                                  fontSize: 60.0, color: Colors.white))),
+                    ]);
+                  },
+                  itemCount: 10, // Can be null
+                ),
+                Positioned(
+                  //Box to hold coins
+                  top: 40,
+                  right: 10,
+                  child: Container(
+                    width: 80,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Stack(
+                          children: <Widget>[
+                            Text(
+                              '${snapshot.data.coins}',
+                              style: TextStyle(
+                                letterSpacing: 1,
+                                fontSize: 20,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 4
+                                  ..color = Colors.black,
+                              ),
+                            ),
+                            Text(
+                              '${snapshot.data.coins}',
+                              style: TextStyle(
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Container(
-                      child: Text('$currentWorld/$totalWorlds', style: TextStyle(fontSize: 60.0, color: Colors.white))
+                  ),
+                ),
+                Positioned(
+                  // Box to hold gems
+                  top: 82,
+                  right: 10,
+                  child: Container(
+                    width: 80,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                  ]
-                );
-              },
-              itemCount: 10, // Can be null
-              )
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
+                      child: Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '${snapshot.data.gems}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                letterSpacing: 1,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 4
+                                  ..color = Colors.black,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '${snapshot.data.gems}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Image(
+                              image: AssetImage('assets/scuffedGem.png'),
+                            )  
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
             );
-        }
-        else{
-          return SizedBox(
-            child: CircularProgressIndicator(),
-            width: 60,
-            height: 60,
-          );
-        }
-      }
-    );
-
+          } else {
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            );
+          }
+        });
   }
 }

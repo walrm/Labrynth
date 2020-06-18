@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SaveState{
   int stars;
   int coins;
+  int gems;
   String levelStr;
   String lastLogin;
   int day;
@@ -63,6 +64,12 @@ class SaveState{
     }
     else{
       this.coinMap='000000000';
+    }
+    if(prefs.containsKey('gems')){
+      this.gems=prefs.getInt(('gems'));
+    }
+    else{
+      this.gems=0;
     }
   }
 
