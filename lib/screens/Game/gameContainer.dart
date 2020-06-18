@@ -6,20 +6,19 @@ import 'grid.dart';
 class GameContainer extends StatelessWidget {
   Grid grid;
 
-  Future<Grid> initGrid() async{
-    grid = new Grid();
-    return grid;
-  }
+  GameContainer(this.grid);
 
   @override
   Widget build(BuildContext context){
-     return FutureBuilder<Grid>(
-      future: initGrid(),
-      builder: (BuildContext context, AsyncSnapshot<Grid> snapshot){
-        if(!snapshot.hasData){
-          return Center(child: Text("Loading..."));
-        }else return Game(grid);
-      }
+    return Scaffold(
+      appBar: AppBar(title: Text('Game')),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [Game(grid)]
+        ),
+      )
     );
   }
 }

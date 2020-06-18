@@ -60,9 +60,7 @@ class GameState extends State<Game> {
   }
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(title: Text('Game')),
-      body: SimpleGestureDetector(
+    return SimpleGestureDetector(
       onVerticalSwipe: _vertSwipe,
       onHorizontalSwipe: _horizontalSwipe,
       child: GridView.count(
@@ -75,9 +73,8 @@ class GameState extends State<Game> {
           }
           return grid.boxes[index];
         }
-      ),
+        ),
       )
-    )
   );
-}
+  }
 }

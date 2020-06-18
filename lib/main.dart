@@ -1,5 +1,6 @@
 import 'package:Labrynth_test/screens/Game/gameContainer.dart';
 import 'package:Labrynth_test/screens/Home/Homepage.dart';
+import 'package:Labrynth_test/screens/Map/worldmap.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget{
       // ),
       routes: {
         '/': (context) => Homepage(),
-        '/game': (context) => GameContainer(),
       }
     );
   }

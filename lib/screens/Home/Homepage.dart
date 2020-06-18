@@ -1,34 +1,22 @@
+import 'package:Labrynth_test/world.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:Labrynth_test/screens/Game/saveState.dart';
+import '../Map/worldmap.dart';
 
 class Homepage extends StatefulWidget{
+  int currentWorld=0;
+  static int totalWorlds=10;
+  List<World> worlds = new List<World>(totalWorlds);
+
   @override
   Homestate createState() => Homestate();
 }
 
-
 class Homestate extends State<Homepage> {
-  int currentWorld=0;
-  int totalWorlds=10;
-  bool isInit=true;
-
-  _horizontalSwipe(SwipeDirection direction){
-    if(direction==SwipeDirection.left && currentWorld!=0){
-    setState(() {
-        currentWorld--;
-      });
-    }
-    else if(direction==SwipeDirection.right&&currentWorld+1<totalWorlds){
-      setState(() {
-        currentWorld++;
-      });
-    }
-  }
+  int totalWorlds = Homepage.totalWorlds;
 
   PageController _controller = PageController(
-    initialPage: 0,
+    initialPage: 2,
   );
 
   @override
@@ -40,6 +28,8 @@ class Homestate extends State<Homepage> {
   Future<SaveState> initSaveState() async{
     SaveState save=new SaveState();
     await save.init();
+    widget.worlds[0] = new World();
+    await widget.worlds[0].init();
     return save;
   }
   @override
@@ -49,6 +39,12 @@ class Homestate extends State<Homepage> {
       builder: (BuildContext context, AsyncSnapshot<SaveState> snapshot){
         if(snapshot.hasData){
             return Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(0),
+                child: AppBar( // Here we create one to set status bar color
+                  backgroundColor: Colors.black, // Set any color of status bar you want; or it defaults to your theme's primary color
+                )
+              ),
               body: PageView.builder(
               itemBuilder: (context, index) {
                 int currentWorld = index+1;
@@ -82,15 +78,21 @@ class Homestate extends State<Homepage> {
                           icon: icon,
                           onPressed: (){
                             if (goToGame){
-                              bool test=false;
-                              Navigator.pushNamed(
+                              // bool test=false;
+                              // Navigator.pushNamed(
+                              //   context,
+                              //   '/game',
+                              //   arguments: <bool>{
+                              //     test,
+                              //   }
+                              //   );
+                               Navigator.push(
                                 context,
-                                '/game',
-                                arguments: <bool>{
-                                  test,
-                                }
-                                );
-                            }
+                                MaterialPageRoute(
+                                  builder: (context) => Map(widget.worlds[0])
+                                )
+                               );
+                              }
                           },
                         )
                       ),
