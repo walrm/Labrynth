@@ -131,10 +131,10 @@ class Homestate extends State<Homepage> {
                               '${snapshot.data.coins}',
                               style: TextStyle(
                                 letterSpacing: 1,
-                                fontSize: 20,
+                                fontSize: 24,
                                 foreground: Paint()
                                   ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 4
+                                  ..strokeWidth = 3
                                   ..color = Colors.black,
                               ),
                             ),
@@ -142,8 +142,8 @@ class Homestate extends State<Homepage> {
                               '${snapshot.data.coins}',
                               style: TextStyle(
                                 letterSpacing: 1,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 24,
                                 color: Colors.white,
                               ),
                             ),
@@ -198,7 +198,7 @@ class Homestate extends State<Homepage> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Image(
-                              image: AssetImage('assets/scuffedGem.png'),
+                              image: AssetImage('assets/scuffedGem2.0.png'),
                             )  
                           ),
                         ],

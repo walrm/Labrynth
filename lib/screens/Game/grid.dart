@@ -40,4 +40,10 @@ class Grid{
     }
     return false;
   }
+    bool checkWin(index){
+    if(boxes[index].type==Type.end){
+      return true;
+    }
+    return false;
+  }
 }
