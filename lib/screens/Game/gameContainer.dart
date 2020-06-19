@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'game.dart';
 import 'grid.dart';
 
-class GameContainer extends StatelessWidget {
+class GameContainer extends StatefulWidget {
   Grid grid;
 
   GameContainer(this.grid);
 
+  @override
+  GameContainerState createState() => GameContainerState();
+
+}    
+
+class GameContainerState extends State<GameContainer>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -16,7 +22,20 @@ class GameContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Game(grid)]
+          children: [
+            Game(widget.grid),
+            Center(
+              child: IconButton(
+                iconSize: 120,
+                icon: Icon(Icons.refresh),
+                onPressed: (){
+                  setState((){
+                    widget.grid.reset();
+                  });
+                },
+              )
+            )
+          ]
         ),
       )
     );

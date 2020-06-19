@@ -51,13 +51,6 @@ class GameState extends State<Game> {
     }
   }
 
-  Color _setColor(int index,){
-    if(grid.boxes[index].visited)
-      return _currentColor;
-    if(grid.boxes[index].isWall())
-      return Colors.black;
-    return Colors.white;
-  }
   @override
   Widget build(BuildContext context){
     return SimpleGestureDetector(

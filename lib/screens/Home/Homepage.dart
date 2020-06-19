@@ -42,8 +42,8 @@ class Homestate extends State<Homepage> {
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(0),
-                child: AppBar( // Here we create one to set status bar color
-                  backgroundColor: Colors.black, // Set any color of status bar you want; or it defaults to your theme's primary color
+                child: AppBar( 
+                  backgroundColor: Colors.black, 
                 )
               ),
               body: Stack(children: <Widget>[
@@ -66,7 +66,7 @@ class Homestate extends State<Homepage> {
                       goToGame = false;
                     } else {
                       icon = Icon(Icons.lock_outline, color: Colors.grey);
-                      img = AssetImage("assets/ocean.jpg");
+                      img = AssetImage("assets/fire.jpg");
                       goToGame = false;
                     }
                     return Stack(children: <Widget>[

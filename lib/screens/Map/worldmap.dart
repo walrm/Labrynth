@@ -27,12 +27,13 @@ class Worldmap extends State<Map>{
       body: Center(
         child: GridView.count(
           crossAxisCount: 3,
-          children: List.generate(20, (index) {
+          children: List.generate(widget.world.puzzles.length, (index) {
             worldNum = index+1;
             if(index == widget.onIndex){
               child = InkWell(
                 splashColor: Colors.blue,
                 onTap: ((){
+                  widget.world.puzzles[index].reset();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

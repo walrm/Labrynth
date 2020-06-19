@@ -28,8 +28,11 @@ class Box extends StatelessWidget{
       this.color = Colors.black;
     }
     return Container(
-      color: color,
-      child: Center(child: Text('Item $index',style: Theme.of(context).textTheme.headline5)),
+      decoration: BoxDecoration(
+        color: color,
+        border: Border.all(width: 1.0, color: Colors.black)
+      ),
+      child: Center(),
     );
   }
   bool isWall(){

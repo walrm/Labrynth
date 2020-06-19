@@ -48,21 +48,23 @@ class World {
 
   int createPuzzle(String s, int i){
     Grid g = new Grid();
+    String str = "";
     while(s[i] != ' '){
+      str+= s[i];
       i++;
     }
     i++;
-    String str = "";
+    int rows = int.parse(str);
+    str = "";
     while(s[i] != ' '){
       str += s[i];
       i++;
     }
     i++;
-    
-    int n = int.parse(str);
-    g.columns = n;
-    g.size = n*n;
-    g.boxes = new List<Box>(n*n);
+    int columns = int.parse(str);
+    g.columns = columns;
+    g.size = rows*columns;
+    g.boxes = new List<Box>(g.size);
     for(int l=0; l<g.boxes.length; l++){
       g.boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
     }

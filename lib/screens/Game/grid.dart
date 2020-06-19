@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 import 'box.dart';
@@ -7,6 +8,13 @@ class Grid{
   int numLocks;
   int columns;
   List<Box> boxes;
+
+  reset(){
+    for(int l=0; l<boxes.length; l++){
+      if(boxes[l].type == Type.normal)
+      boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
+    }
+  }
 
   bool swipeCheck(SwipeDirection direction, int _onIndex, int _currentColorState){
     if(direction == SwipeDirection.down){
