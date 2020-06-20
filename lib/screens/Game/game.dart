@@ -70,7 +70,7 @@ class GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    if (/*grid.checkWin(_onIndex)*/ true) {
+    if (grid.checkWin(_onIndex)) {
       double width = MediaQuery.of(context).size.width;
       double height = MediaQuery.of(context).size.height;
       return Align(
