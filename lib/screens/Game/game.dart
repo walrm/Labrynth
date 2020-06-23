@@ -4,10 +4,14 @@ import 'grid.dart';
 import 'box.dart';
 import '../Home/Homepage.dart';
 import '../Map/worldmap.dart';
+import 'package:Labrynth_test/screens/Game/saveState.dart';
 
 class Game extends StatefulWidget {
   final Grid grid;
-  Game(this.grid);
+  final SaveState data;//all of the backend stored stuff
+  final int currentWorld;//integer for the current world-starts from 1
+  final int currentLevel;//Level number in the world-starts from 1
+  Game(this.grid,this.data,this.currentWorld,this.currentLevel);
 
   @override
   GameState createState() => GameState(grid);
@@ -68,11 +72,26 @@ class GameState extends State<Game> {
     return Colors.white;
   }
 
+  void updateInfo(){
+    widget.data.stars++;
+    String s=widget.data.levelStr[widget.currentWorld];
+    String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
+    if(s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){//unlocks next level if the current level is locked
+      replaced=s.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
+    }
+    widget.data.coins++;
+    widget.data.levelStr[widget.currentWorld]=replaced;
+    widget.data.write();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     if (grid.checkWin(_onIndex)) {
       double width = MediaQuery.of(context).size.width;
       double height = MediaQuery.of(context).size.height;
+      updateInfo();
       return Align(
         alignment: Alignment.center,
         child: Container(
