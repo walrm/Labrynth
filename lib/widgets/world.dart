@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'screens/Game/box.dart';
-import 'screens/Game/grid.dart';
+import '../screens/Game/box.dart';
+import '../screens/Game/grid.dart';
 
 class World {
   List<Grid> puzzles;
@@ -13,9 +13,9 @@ class World {
     puzzles = new List<Grid>();
   }
 
-  Future<List<String>> loadAsset() async {
+  Future<List<String>> loadAsset(String filename) async {
     List<String> data = List<String>();
-    await rootBundle.loadString('assets/data.txt').then((q){
+    await rootBundle.loadString('assets/$filename.txt').then((q){
       for (String i in LineSplitter().convert(q)) {
         data.add(i);
       }
@@ -24,8 +24,8 @@ class World {
     return data;
   }
 
-  Future<void> readFile() async{
-    List<String> data = await loadAsset();
+  Future<void> readFile(String filename) async{
+    List<String> data = await loadAsset(filename);
     String s = "";
     
     for(int index = 0; index<data.length; index++){
@@ -87,7 +87,7 @@ class World {
     return i;
   }
 
-  Future<void> init() async{
-    await readFile();
+  Future<void> init(String filename) async{
+    await readFile(filename);
   }
 }

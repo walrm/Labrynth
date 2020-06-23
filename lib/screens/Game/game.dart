@@ -1,16 +1,14 @@
+import 'package:Labrynth_test/screens/Game/levelcomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'grid.dart';
-import 'box.dart';
-import '../Home/Homepage.dart';
-import '../Map/worldmap.dart';
-import 'package:Labrynth_test/screens/Game/saveState.dart';
+import '../../widgets/saveState.dart';
 
 class Game extends StatefulWidget {
   final Grid grid;
-  final SaveState data;//all of the backend stored stuff
-  final int currentWorld;//integer for the current world-starts from 1
-  final int currentLevel;//Level number in the world-starts from 1
+  final SaveState data; //all of the backend stored stuff
+  final int currentWorld; //integer for the current world-starts from 1
+  final int currentLevel; //Level number in the world-starts from 1
   Game(this.grid,this.data,this.currentWorld,this.currentLevel);
 
   @override
@@ -20,9 +18,7 @@ class Game extends StatefulWidget {
 class GameState extends State<Game> {
   int _currentColorState = 0;
   int _onIndex = 0;
-  
   Color _currentColor = Colors.grey;
-
   Grid grid;
 
   GameState(this.grid);
@@ -64,158 +60,58 @@ class GameState extends State<Game> {
     }
   }
 
-  Color _setColor(
-    int index,
-  ) {
-    if (grid.boxes[index].visited) return _currentColor;
-    if (grid.boxes[index].isWall()) return Colors.black;
-    return Colors.white;
-  }
 
   void updateInfo(){
     widget.data.stars++;
-    String s=widget.data.levelStr[widget.currentWorld];
+    String s = widget.data.levelStr[widget.currentWorld-1];
     String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
     if(s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){//unlocks next level if the current level is locked
-      replaced=s.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
+      replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
     }
     widget.data.coins++;
-    widget.data.levelStr[widget.currentWorld]=replaced;
+    widget.data.levelStr[widget.currentWorld-1]=replaced;
     widget.data.write();
   }
-
 
 
   @override
   Widget build(BuildContext context) {
     if (grid.checkWin(_onIndex)) {
-      double width = MediaQuery.of(context).size.width;
-      double height = MediaQuery.of(context).size.height;
       updateInfo();
-      return Align(
-        alignment: Alignment.center,
-        child: Container(
-          width: (2 * width) / 3,
-          height: height / 3,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+      return LevelComplete();
+    } 
+    return SimpleGestureDetector(
+      onVerticalSwipe: _vertSwipe,
+      onHorizontalSwipe: _horizontalSwipe,
+      child: Column(
+        children: <Widget>[
+          GridView.count(
+            shrinkWrap: true,
+            physics: new NeverScrollableScrollPhysics(),
+            crossAxisCount: grid.columns,
+            children: List.generate(grid.size, (index) {
+              if (index == _onIndex) {
+                return Container(
+                  color: _currentColor,
+                  child: Center(child: Icon(Icons.sentiment_neutral)));
+              }
+              return grid.boxes[index];
+            }),
           ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    'Level Complete!',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,//Home button
-                  child: ClipOval(
-                    child: Material(
-                      color:Colors.grey,
-                      child:InkWell(
-                        splashColor:Colors.lightBlue,
-                        child: SizedBox(
-                          width: height/12, 
-                          height: height/12, 
-                          child: Icon(
-                            Icons.home
-                          ),
-                        ),
-                        onTap:(){
-                          Navigator.popUntil(context, ModalRoute.withName('/'));
-                        }
-                        ),
-                      ),
-                    ), 
-                  ),
-                Align(
-                  alignment: Alignment.bottomCenter,//Map Button       
-                  child: ClipOval(
-                    child: Material(
-                      color:Colors.grey,
-                      child:InkWell(
-                        splashColor:Colors.lightBlue,
-                        child: SizedBox(
-                          width: height/12, 
-                          height: height/12, 
-                          child: Icon(Icons.apps),
-                        ),
-                        onTap:(){
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ), 
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight, //Next level button
-                  child: ClipOval(
-                    child: Material(
-                      color:Colors.grey,
-                      child:InkWell(
-                        splashColor:Colors.lightBlue,
-                        child: SizedBox(
-                          width: height/12, 
-                          height: height/12, 
-                          child: Icon(
-                            Icons.arrow_forward
-                          )
-                        ),
-                        onTap:(){
-                          Navigator.pop(context, 'next');
-                        },
-                      ),
-                    ), 
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return SimpleGestureDetector(
-          onVerticalSwipe: _vertSwipe,
-          onHorizontalSwipe: _horizontalSwipe,
-          child: Column(
-            children: <Widget>[
-              GridView.count(
-                shrinkWrap: true,
-                physics: new NeverScrollableScrollPhysics(),
-                crossAxisCount: grid.columns,
-                children: List.generate(grid.size, (index) {
-                  if (index == _onIndex) {
-                    return Container(
-                        color: _currentColor,
-                        child: Center(child: Icon(Icons.sentiment_neutral)));
-                  }
-                  return grid.boxes[index];
-                }),
-              ),
-              Center(
-                child: IconButton(
-                  iconSize: 120,
-                  icon: Icon(Icons.refresh),
-                  onPressed: (){
-                    setState((){
-                      grid.reset();
-                      _onIndex = grid.startIndex;
-                    });
-                  },
-                )
-              )
-            ],
+          Center(
+            child: IconButton(
+              iconSize: 120,
+              icon: Icon(Icons.refresh),
+              onPressed: (){
+                setState((){
+                  grid.reset();
+                  _onIndex = grid.startIndex;
+                });
+              },
+            )
           )
-      );
-    }
+        ],
+      )
+    );
   }
 }

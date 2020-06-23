@@ -1,13 +1,17 @@
 import 'package:Labrynth_test/screens/Game/gameContainer.dart';
+import 'package:Labrynth_test/widgets/saveState.dart';
 import 'package:flutter/material.dart';
 
-import '../../world.dart';
+import '../../widgets/world.dart';
 
 class Map extends StatefulWidget{
   int onIndex;
   World world;
 
-  Map(this.world);
+  final SaveState data;//all of the backend stored stuff
+  final int currentWorld;//integer for the current world-starts from 1
+
+  Map(this.world, this.data, this.currentWorld);
 
   @override
   Worldmap createState() => Worldmap();
@@ -19,7 +23,6 @@ class Worldmap extends State<Map>{
   @override
   Widget build(BuildContext context){
     Widget child;
-    
     return Scaffold(
       appBar: AppBar(
         title: Text('Map'),
@@ -29,6 +32,14 @@ class Worldmap extends State<Map>{
           crossAxisCount: 3,
           children: List.generate(widget.world.puzzles.length, (index) {
             worldNum = index+1;
+            if(widget.data.levelStr[widget.currentWorld-1].substring(index,index+1) == "4"){
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black)
+                ),
+                child: Icon(Icons.lock)
+              );
+            }
             if(index == widget.onIndex){
               child = InkWell(
                 splashColor: Colors.blue,
@@ -37,15 +48,22 @@ class Worldmap extends State<Map>{
                   var navigationResult = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GameContainer(widget.world.puzzles[widget.onIndex])
+                      builder: (context) => GameContainer(
+                        widget.world.puzzles[widget.onIndex], widget.data, widget.currentWorld, widget.onIndex+1
+                      )
                     )
                   );
+                  setState((){
+                    
+                  });
                   while(navigationResult == 'next') {
                     setState((){
                       widget.onIndex++;
                     });
                     navigationResult = await Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => GameContainer(widget.world.puzzles[widget.onIndex])
+                      builder: (context) => GameContainer(
+                        widget.world.puzzles[widget.onIndex], widget.data, widget.currentWorld, widget.onIndex+1
+                      )
                     ));
                   }
                 }),

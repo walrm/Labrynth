@@ -1,11 +1,11 @@
-import 'package:Labrynth_test/world.dart';
+import '../../widgets/world.dart';
 import 'package:flutter/material.dart';
-import 'package:Labrynth_test/screens/Game/saveState.dart';
+import 'package:Labrynth_test/widgets/saveState.dart';
 import '../Map/worldmap.dart';
 
 class Homepage extends StatefulWidget{
   int currentWorld=0;
-  static int totalWorlds=10;
+  static int totalWorlds=3;
   List<World> worlds = new List<World>(totalWorlds);
 
   @override
@@ -14,6 +14,8 @@ class Homepage extends StatefulWidget{
 
 class Homestate extends State<Homepage> {
   int totalWorlds = Homepage.totalWorlds;
+  List<AssetImage> bgImages = 
+  [AssetImage("assets/nature.jpg"),AssetImage("assets/ocean.jpg"),AssetImage("assets/fire.jpg")];
 
   PageController _controller = PageController(
     initialPage: 2,
@@ -28,8 +30,11 @@ class Homestate extends State<Homepage> {
   Future<SaveState> initSaveState() async {
     SaveState save = new SaveState();
     await save.init();
-    widget.worlds[0] = new World();
-    await widget.worlds[0].init();
+
+    for(int i=0; i<Homepage.totalWorlds; i++){
+      widget.worlds[i] = new World();
+      await widget.worlds[i].init(i.toString());
+    }
     return save;
   }
 
@@ -49,65 +54,40 @@ class Homestate extends State<Homepage> {
               body: Stack(children: <Widget>[
                 PageView.builder(
                   itemBuilder: (context, index) {
-                    int currentWorld = index + 1;
                     Icon icon;
-                    ImageProvider img;
-                    bool goToGame;
-                    if (currentWorld == 1) {
-                      icon =
-                          Icon(Icons.play_circle_outline, color: Colors.green);
-                      img = AssetImage("assets/nature.jpg");
-                      print("Coins:");
-                      print(snapshot.data.coins);
-                      goToGame = true;
-                    } else if (currentWorld == 2) {
+                    try{
+                      if(snapshot.data.levelStr[index]!= null){
+                        icon = Icon(Icons.play_circle_outline, color: Colors.green);
+                      }
+                    }on RangeError{
                       icon = Icon(Icons.lock_outline, color: Colors.grey);
-                      img = AssetImage("assets/ocean.jpg");
-                      goToGame = false;
-                    } else {
-                      icon = Icon(Icons.lock_outline, color: Colors.grey);
-                      img = AssetImage("assets/fire.jpg");
-                      goToGame = false;
                     }
                     return Stack(children: <Widget>[
                       Container(
                         child: Center(
-                            child: IconButton(
-                          iconSize: 120,
-                          icon: icon,
-                          onPressed: () {
-                            if (goToGame){
-                              // bool test=false;
-                              // Navigator.pushNamed(
-                              //   context,
-                              //   '/game',
-                              //   arguments: <bool>{
-                              //     test,
-                              //   }
-                              //   );
-                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Map(widget.worlds[0])
-                                )
-                               );
-                              }
-                          },
-                        )),
+                          child: IconButton(
+                            iconSize: 120,
+                            icon: icon,
+                            onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Map(widget.worlds[index], snapshot.data, index+1)
+                                  )
+                                );
+                            },
+                          )
+                        ),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: img,
+                            image: bgImages[index],
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      Container(
-                          child: Text('$currentWorld/$totalWorlds',
-                              style: TextStyle(
-                                  fontSize: 60.0, color: Colors.white))),
                     ]);
                   },
-                  itemCount: 10, // Can be null
+                  itemCount: Homepage.totalWorlds, // Can be null
                 ),
                 Positioned(
                   //Box to hold coins

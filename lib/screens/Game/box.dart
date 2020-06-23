@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 enum Type{
     normal,
     key,
@@ -46,11 +45,9 @@ class Box extends StatelessWidget{
       child: Center(),
     );
   }
+
   bool isWall(){
-    if(this.type==Type.wall){
-      return true;
-    }
-    return false;
+    return this.type == Type.wall;
   }
 
   void setColor(String s){
