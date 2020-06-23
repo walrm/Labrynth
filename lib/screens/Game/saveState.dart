@@ -5,7 +5,7 @@ class SaveState{
   int stars;
   int coins;
   int gems;
-  String levelStr;
+  List<String> levelStr;//0: unlocked,1: star,2: 2 star,3: 3 star,4:locked
   String lastLogin;
   int day;
   List<String> colors;
@@ -29,10 +29,10 @@ class SaveState{
       this.coins=0;
     }
     if(prefs.containsKey('levelstr')){
-      this.levelStr=prefs.getString('levelstr');
+      this.levelStr=prefs.getStringList('levelstr');
     }
     else{
-      this.levelStr='0000000000000000000000000000000000000000000000';
+      this.levelStr=['04444'];
     }
     if(prefs.containsKey('lastLogin')){
       this.lastLogin=prefs.getString('lastLogin');
@@ -77,7 +77,7 @@ class SaveState{
     final prefs= await SharedPreferences.getInstance();
     prefs.setInt('stars', this.stars);
     prefs.setInt('coins',this.coins);
-    prefs.setString('levelstr', this.levelStr);
+    prefs.setStringList('levelstr', this.levelStr);
     var now=DateTime.now();
     prefs.setString('lastLogin',now.toString());
     prefs.setInt('day',this.day);
