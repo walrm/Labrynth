@@ -7,12 +7,13 @@ class Grid{
   int size;
   int numLocks;
   int columns;
+  int startIndex;
   List<Box> boxes;
 
   reset(){
     for(int l=0; l<boxes.length; l++){
       if(boxes[l].type == Type.normal)
-      boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
+        boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
     }
   }
 

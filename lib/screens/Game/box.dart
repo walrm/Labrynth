@@ -26,6 +26,15 @@ class Box extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    if(this.type==Type.end){
+      return Container(
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(width: 1.0, color: Colors.black)
+        ),
+        child: Center(child: Text('?')),
+      );
+    }
     if(isWall()){
       this.color = Colors.black;
     }

@@ -7,7 +7,6 @@ import '../Map/worldmap.dart';
 
 class Game extends StatefulWidget {
   final Grid grid;
-
   Game(this.grid);
 
   @override
@@ -16,7 +15,8 @@ class Game extends StatefulWidget {
 
 class GameState extends State<Game> {
   int _currentColorState = 0;
-  var _onIndex = 0;
+  int _onIndex = 0;
+  
   Color _currentColor = Colors.grey;
 
   Grid grid;
@@ -112,12 +112,7 @@ class GameState extends State<Game> {
                           ),
                         ),
                         onTap:(){
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                              //Change this to the homepage later instead of world page
-                              builder: (context)=>new Homepage())
-                            );
+                          Navigator.popUntil(context, ModalRoute.withName('/'));
                         }
                         ),
                       ),
@@ -136,11 +131,7 @@ class GameState extends State<Game> {
                           child: Icon(Icons.apps),
                         ),
                         onTap:(){
-                          //Navigator.push(
-                          //   context,
-                          //   new MaterialPageRoute(
-                          //     //builder: (context)=>new Map())
-                          // );
+                          Navigator.pop(context);
                         },
                       ),
                     ), 
@@ -160,7 +151,9 @@ class GameState extends State<Game> {
                             Icons.arrow_forward
                           )
                         ),
-                        onTap:(){},
+                        onTap:(){
+                          Navigator.pop(context, 'next');
+                        },
                       ),
                     ), 
                   ),
@@ -174,19 +167,36 @@ class GameState extends State<Game> {
       return SimpleGestureDetector(
           onVerticalSwipe: _vertSwipe,
           onHorizontalSwipe: _horizontalSwipe,
-          child: GridView.count(
-            shrinkWrap: true,
-            physics: new NeverScrollableScrollPhysics(),
-            crossAxisCount: grid.columns,
-            children: List.generate(grid.size, (index) {
-              if (index == _onIndex) {
-                return Container(
-                    color: _currentColor,
-                    child: Center(child: Icon(Icons.sentiment_neutral)));
-              }
-              return grid.boxes[index];
-            }),
-          ));
+          child: Column(
+            children: <Widget>[
+              GridView.count(
+                shrinkWrap: true,
+                physics: new NeverScrollableScrollPhysics(),
+                crossAxisCount: grid.columns,
+                children: List.generate(grid.size, (index) {
+                  if (index == _onIndex) {
+                    return Container(
+                        color: _currentColor,
+                        child: Center(child: Icon(Icons.sentiment_neutral)));
+                  }
+                  return grid.boxes[index];
+                }),
+              ),
+              Center(
+                child: IconButton(
+                  iconSize: 120,
+                  icon: Icon(Icons.refresh),
+                  onPressed: (){
+                    setState((){
+                      grid.reset();
+                      _onIndex = grid.startIndex;
+                    });
+                  },
+                )
+              )
+            ],
+          )
+      );
     }
   }
 }

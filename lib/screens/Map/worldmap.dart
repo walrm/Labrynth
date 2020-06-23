@@ -32,14 +32,22 @@ class Worldmap extends State<Map>{
             if(index == widget.onIndex){
               child = InkWell(
                 splashColor: Colors.blue,
-                onTap: ((){
-                  widget.world.puzzles[index].reset();
-                  Navigator.push(
+                onTap: (() async {
+                  widget.world.puzzles[widget.onIndex].reset();
+                  var navigationResult = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GameContainer(widget.world.puzzles[index])
+                      builder: (context) => GameContainer(widget.world.puzzles[widget.onIndex])
                     )
                   );
+                  while(navigationResult == 'next') {
+                    setState((){
+                      widget.onIndex++;
+                    });
+                    navigationResult = await Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => GameContainer(widget.world.puzzles[widget.onIndex])
+                    ));
+                  }
                 }),
                 child: Center(child: Icon(Icons.play_circle_filled))
               );

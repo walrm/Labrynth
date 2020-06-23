@@ -5,7 +5,6 @@ import 'grid.dart';
 
 class GameContainer extends StatefulWidget {
   Grid grid;
-
   GameContainer(this.grid);
 
   @override
@@ -24,17 +23,6 @@ class GameContainerState extends State<GameContainer>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Game(widget.grid),
-            Center(
-              child: IconButton(
-                iconSize: 120,
-                icon: Icon(Icons.refresh),
-                onPressed: (){
-                  setState((){
-                    widget.grid.reset();
-                  });
-                },
-              )
-            )
           ]
         ),
       )

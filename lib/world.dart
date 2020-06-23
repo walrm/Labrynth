@@ -73,6 +73,11 @@ class World {
     while(i!=s.length && s[i] != ' '){
       if(s[i] == '#'){
         g.boxes[j].type = Type.wall;
+      }else if(s[i] == '@'){
+        g.boxes[j].type = Type.start;
+        g.startIndex = j;
+      }else if(s[i] == '?'){
+        g.boxes[j].type = Type.end;
       }
       j++;
       i++;
