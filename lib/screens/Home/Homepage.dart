@@ -55,9 +55,11 @@ class Homestate extends State<Homepage> {
                 PageView.builder(
                   itemBuilder: (context, index) {
                     Icon icon;
+                    bool play = false;
                     try{
                       if(snapshot.data.levelStr[index]!= null){
                         icon = Icon(Icons.play_circle_outline, color: Colors.green);
+                        play = true;
                       }
                     }on RangeError{
                       icon = Icon(Icons.lock_outline, color: Colors.grey);
@@ -69,6 +71,7 @@ class Homestate extends State<Homepage> {
                             iconSize: 120,
                             icon: icon,
                             onPressed: () {
+                              if(play)
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

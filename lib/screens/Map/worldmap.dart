@@ -56,7 +56,7 @@ class Worldmap extends State<Map>{
                   setState((){
                     
                   });
-                  while(navigationResult == 'next') {
+                  while(navigationResult == 'next' && widget.onIndex+1 < widget.world.puzzles.length) {
                     setState((){
                       widget.onIndex++;
                     });

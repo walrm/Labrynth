@@ -65,7 +65,7 @@ class GameState extends State<Game> {
     widget.data.stars++;
     String s = widget.data.levelStr[widget.currentWorld-1];
     String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
-    if(s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){//unlocks next level if the current level is locked
+    if(widget.currentLevel+1 < s.length && s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){//unlocks next level if the current level is locked
       replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
     }
     widget.data.coins++;
