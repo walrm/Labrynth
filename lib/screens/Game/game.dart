@@ -61,6 +61,7 @@ class GameState extends State<Game> {
   }
 
 
+
   void updateInfo(){
     widget.data.stars++;
     String s = widget.data.levelStr[widget.currentWorld-1];

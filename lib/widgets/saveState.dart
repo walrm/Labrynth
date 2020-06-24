@@ -11,11 +11,14 @@ class SaveState{
   List<String> colors;
   int skips;
   String coinMap;
+  SharedPreferences prefs;
+  int volume;//0:off,1:medium,2:loud
+
   saveState() async{
     await init(); 
   }
   Future<void> init() async{
-    final prefs= await SharedPreferences.getInstance();
+    this.prefs= await SharedPreferences.getInstance();
     if(prefs.containsKey('stars')){
       this.stars=prefs.getInt('stars');
     }
@@ -73,8 +76,7 @@ class SaveState{
     }
   }
 
-  void write() async{
-    final prefs= await SharedPreferences.getInstance();
+  void write(){
     prefs.setInt('stars', this.stars);
     prefs.setInt('coins',this.coins);
     prefs.setStringList('levelstr', this.levelStr);
@@ -84,5 +86,13 @@ class SaveState{
     prefs.setStringList('colors',this.colors);
     prefs.setInt('skips', this.skips);
     prefs.setString('coinMap', this.coinMap);
+  }
+  void reset() async{
+    this.stars=0;
+    this.coins=0;
+    this.levelStr=['04444'];
+    this.day=0;
+    this.skips=0;
+    write();
   }
 }

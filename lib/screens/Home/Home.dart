@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../widgets/saveState.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Labrynth_test/screens/Home/Homepage.dart';
@@ -13,6 +14,7 @@ class Home extends StatefulWidget{
 }
 
 class HomeScreen extends State<Home>{
+  bool isSettings=false;
 
 
   Future<SaveState> initSaveState() async{
@@ -47,95 +49,9 @@ class HomeScreen extends State<Home>{
                   child: Container(
                     width: screenWidth,
                     height: screenHeight,
-                    /*child: Stack(//Trying out buttons at the bottom
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment(0,.33),
-                          child:Stack(
-                            children: <Widget>[
-                              Opacity(
-                                opacity:.95,
-                                child: Icon(
-                                    Icons.play_circle_filled,
-                                    size:100,
-                                    color: Colors.grey,
-                                ),
-                              ),
-                              Opacity(
-                                opacity:1,
-                                child: IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(
-                                    Icons.play_circle_outline,
-                                    color: Colors.black,
-                                  ),
-                                  iconSize: 100,
-                                  onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context)=>Homepage()
-                                      )
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]), 
-                        ),
-                        Align(
-                          alignment: Alignment(-.7,.6),
-                          child:Stack(
-                            children: <Widget>[
-                              Opacity(
-                                opacity:1,
-                                child: IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(
-                                    Icons.settings,
-                                    color: Colors.black,
-                                  ),
-                                  iconSize: 80,
-                                  onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context)=>Homepage()
-                                      )
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]), 
-                        ),
-                        Align(
-                          alignment: Alignment(.7,.6),
-                          child:Stack(
-                            children: <Widget>[
-                              Opacity(
-                                opacity:1,
-                                child: IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(
-                                    Icons.shopping_cart,
-                                    color: Colors.black,
-                                  ),
-                                  iconSize: 80,
-                                  onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context)=>Homepage()
-                                      )
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]), 
-                        ),
-                    ]),*/
                     child: Stack(
                       children: <Widget>[
-                        Align(
+                        Align(//Play Button
                           alignment: Alignment(0,-.3),
                           child:InkWell(
                             onTap:(){
@@ -170,35 +86,50 @@ class HomeScreen extends State<Home>{
                             ),
                           ),
                         ),
-                        Align(
+                        Align(//Settings Button
                           alignment: Alignment(0,.1),
-                          child: Container(
-                            height:80,
-                            width:200,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.red,Colors.deepOrange,Colors.yellow],
-                                stops:[0.0,.3,1],
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
+                          child: InkWell(
+                            onTap: (){
+                              print('tapped');
+                              setState(() {
+                                isSettings=true;
+                                print(isSettings);
+                              });
+                            },
+                            child: Container(
+                              height:80,
+                              width:200,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Colors.red,Colors.deepOrange,Colors.yellow],
+                                  stops:[0.0,.3,1],
+                                  begin: FractionalOffset.topCenter,
+                                  end: FractionalOffset.bottomCenter,
+                                ),
+                                border: Border.all(width:6,color:Colors.black),
                               ),
-                              border: Border.all(width:6,color:Colors.black),
-                            ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Settings',
-                                style:  GoogleFonts.roboto(
-                                  fontSize: 40,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Settings',
+                                  style:  GoogleFonts.roboto(
+                                    fontSize: 40,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        Align(
+                        Align(//Shop Button
                           alignment: Alignment(0,.5),
                           child:InkWell(
                             onTap:(){
+                              if(!isSettings){
+
+                              }
+                              else{
+                                
+                              }
                             },
                             child: Container(
                               height:80,
@@ -224,17 +155,112 @@ class HomeScreen extends State<Home>{
                             ),
                           ),
                         ),
+                        if(isSettings)//Settings box, if visible
+                          AnimatedOpacity(
+                            opacity: 1.0,
+                            
+                            duration: Duration(milliseconds: 250),
+                            child: Align(
+                              alignment:Alignment.center,
+                              child: Container(
+                                height: (screenHeight/2.5),
+                                width: (screenWidth/4)*3,
+                                padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border:Border.all(
+                                    color: Colors.black,
+                                    width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Stack(
+                                  children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child:Text(
+                                        'Settings',
+                                        style: GoogleFonts.roboto(
+                                          color:Colors.black,
+                                          fontSize: 40, 
+                                        ),
+                                      ),
+                                    ),
+                                    Align(//Cancel button
+                                      alignment: Alignment.bottomLeft,
+                                      child:InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            isSettings=false;
+                                          });
+                                        },
+                                        child:Container(
+                                          height: ((screenHeight/2)/8)*1.1,
+                                          width: (screenWidth/12)*3*1.1,
+                                          decoration: BoxDecoration(
+                                            color: Colors.redAccent,
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width:5,
+                                            ),
+                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child:Text(
+                                              'Cancel',
+                                              style: GoogleFonts.roboto(
+                                                fontSize: 24,
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          )
+                                        ),
+                                      ),
+                                    ),
+                                    Align(//Settings button
+                                      alignment: Alignment.bottomRight,
+                                      child:InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            isSettings=false;
+                                          });
+                                        },
+                                        child:Container(
+                                          height: ((screenHeight/2)/8)*1.1,
+                                          width: (screenWidth/12)*3*1.1,
+                                          decoration: BoxDecoration(
+                                            color: Colors.lightGreen,
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width:5,
+                                            ),
+                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child:Text(
+                                              'Confirm',
+                                              style: GoogleFonts.roboto(
+                                                fontSize: 24,
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          )
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ),
+                            ),
+                          ),
                       ],
-
-
-
-
-
                     ),
                   ),
                 ),
-            ]),
-          );
+              ]),
+            );
         }
         else{
           return SizedBox(
