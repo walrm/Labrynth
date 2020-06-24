@@ -23,6 +23,7 @@ class GameState extends State<Game> {
   Color _currentColor = Colors.grey;
   Grid grid;
 
+
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
@@ -71,9 +72,10 @@ class GameState extends State<Game> {
     // if(widget.currentLevel+1 < s.length && s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){ //unlocks next level if the current level is locked
     //   replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
     // }else 
+    print(widget.currentLevel);
     if(widget.currentLevel+1 == widget.numPuzzles){ //unlock the next world if completed last level in current world
       widget.data.levelStr.add('0');
-    }else{
+    }else if(widget.currentLevel+1==widget.data.levelStr[widget.currentWorld].length){
       widget.data.levelStr[widget.currentWorld] += "0";
     }
     widget.data.coins++;

@@ -90,7 +90,7 @@ class SaveState{
   void reset() async{
     this.stars=0;
     this.coins=0;
-    this.levelStr=['04444'];
+    this.levelStr=['0'];
     this.day=0;
     this.skips=0;
     write();

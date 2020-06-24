@@ -30,6 +30,7 @@ class Homestate extends State<Homepage> {
   Future<SaveState> initSaveState() async {
     SaveState save = new SaveState();
     await save.init();
+    // save.reset();
 
     for(int i=0; i<Homepage.totalWorlds; i++){
       widget.worlds[i] = new World();
