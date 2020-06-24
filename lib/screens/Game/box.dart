@@ -26,7 +26,7 @@ class Box extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     if(this.type==Type.end){
-      return Container(
+      return Container(w
         decoration: BoxDecoration(
           color: color,
           border: Border.all(width: 1.0, color: Colors.black)

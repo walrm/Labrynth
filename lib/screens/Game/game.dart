@@ -63,8 +63,6 @@ class GameState extends State<Game> {
     }
   }
 
-
-
   void updateInfo(){
     widget.data.stars++;
     // String s = widget.data.levelStr[widget.currentWorld-1];
@@ -96,6 +94,7 @@ class GameState extends State<Game> {
       child: Column(
         children: <Widget>[
           GridView.count(
+            childAspectRatio: grid.size/grid.columns/grid.columns,
             shrinkWrap: true,
             physics: new NeverScrollableScrollPhysics(),
             crossAxisCount: grid.columns,

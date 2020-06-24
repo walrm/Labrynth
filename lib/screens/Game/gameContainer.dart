@@ -24,6 +24,8 @@ class GameContainerState extends State<GameContainer>{
     return Scaffold(
       appBar: AppBar(title: Text('Game')),
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
