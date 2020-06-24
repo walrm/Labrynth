@@ -21,13 +21,11 @@ Future<List<String>> gettingProgressData() async{
 }
 
 class Homestate extends State<Homepage> {
-
   int currentWorld=0;
   int totalWorlds=10;
    _horizontalSwipe(SwipeDirection direction){
      if(direction==SwipeDirection.left&&currentWorld!=0){
        currentWorld--;
-
      }
      else if(direction==SwipeDirection.right&&currentWorld+1<totalWorlds){
        setState(() {

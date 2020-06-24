@@ -75,9 +75,12 @@ class Homestate extends State<Homepage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => Map(widget.worlds[index], snapshot.data, index+1)
+                                    builder: (context) => Map(widget.worlds[index], snapshot.data, index)
                                   )
-                                );
+                                ).then((value)=>{
+                                  setState((){})
+                                }
+                              );
                             },
                           )
                         ),

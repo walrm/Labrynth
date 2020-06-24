@@ -35,7 +35,7 @@ class SaveState{
       this.levelStr=prefs.getStringList('levelstr');
     }
     else{
-      this.levelStr=['04444','00'];
+      this.levelStr=['0'];
     }
     if(prefs.containsKey('lastLogin')){
       this.lastLogin=prefs.getString('lastLogin');

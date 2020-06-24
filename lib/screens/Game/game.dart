@@ -9,7 +9,9 @@ class Game extends StatefulWidget {
   final SaveState data; //all of the backend stored stuff
   final int currentWorld; //integer for the current world-starts from 1
   final int currentLevel; //Level number in the world-starts from 1
-  Game(this.grid,this.data,this.currentWorld,this.currentLevel);
+  final int numPuzzles;
+  
+  Game(this.grid,this.data,this.currentWorld,this.currentLevel, this.numPuzzles);
 
   @override
   GameState createState() => GameState(grid);
@@ -64,13 +66,18 @@ class GameState extends State<Game> {
 
   void updateInfo(){
     widget.data.stars++;
-    String s = widget.data.levelStr[widget.currentWorld-1];
-    String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
-    if(widget.currentLevel+1 < s.length && s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){//unlocks next level if the current level is locked
-      replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
+    // String s = widget.data.levelStr[widget.currentWorld-1];
+    // String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
+    // if(widget.currentLevel+1 < s.length && s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){ //unlocks next level if the current level is locked
+    //   replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
+    // }else 
+    if(widget.currentLevel+1 == widget.numPuzzles){ //unlock the next world if completed last level in current world
+      widget.data.levelStr.add('0');
+    }else{
+      widget.data.levelStr[widget.currentWorld] += "0";
     }
     widget.data.coins++;
-    widget.data.levelStr[widget.currentWorld-1]=replaced;
+    // widget.data.levelStr[widget.currentWorld-1]=replaced;
     widget.data.write();
   }
 

@@ -9,7 +9,9 @@ class GameContainer extends StatefulWidget {
   final SaveState data; //all of the backend stored stuff
   final int currentWorld; //integer for the current world-starts from 1
   final int currentLevel; //Level number in the world-starts from 1
-  GameContainer(this.grid, this.data, this.currentWorld, this.currentLevel);
+  final int numPuzzles; 
+
+  GameContainer(this.grid, this.data, this.currentWorld, this.currentLevel, this.numPuzzles);
 
   @override
   GameContainerState createState() => GameContainerState();
@@ -26,7 +28,7 @@ class GameContainerState extends State<GameContainer>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Game(widget.grid, widget.data, widget.currentWorld, widget.currentLevel),
+            Game(widget.grid, widget.data, widget.currentWorld, widget.currentLevel, widget.numPuzzles),
           ]
         ),
       )
