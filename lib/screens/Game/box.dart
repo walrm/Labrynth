@@ -12,7 +12,7 @@ class Box extends StatelessWidget{
   int index;
   Color color;
   bool visited;
-  int colorState;
+  String colorState;
   Type type;
 
   Box(this.index, this.color, this.visited, this.type, this.colorState);
@@ -25,15 +25,15 @@ class Box extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    Text text;
     if(this.type==Type.end){
-      return Container(w
-        decoration: BoxDecoration(
-          color: color,
-          border: Border.all(width: 1.0, color: Colors.black)
-        ),
-        child: Center(child: Text('?')),
-      );
+      text = Text('?');
+    }else if(this.type == Type.key){
+      text = Text(this.colorState);
+    }else if(this.type == Type.lock){
+      text = Text(this.colorState);
     }
+
     if(isWall()){
       this.color = Colors.black;
     }
@@ -42,12 +42,20 @@ class Box extends StatelessWidget{
         color: color,
         border: Border.all(width: 1.0, color: Colors.black)
       ),
-      child: Center(),
+      child: Center(child: text),
     );
   }
 
   bool isWall(){
     return this.type == Type.wall;
+  }
+
+  bool isKey(){
+    return this.type == Type.key;
+  }
+
+  bool isLock(){
+    return this.type == Type.lock;
   }
 
   void setColor(String s){

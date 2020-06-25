@@ -13,31 +13,46 @@ class Grid{
   reset(){
     for(int l=0; l<boxes.length; l++){
       if(boxes[l].type == Type.normal)
-        boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
+        boxes[l]=new Box(l,Colors.white,false,Type.normal,'0');
     }
   }
 
-  bool swipeCheck(SwipeDirection direction, int _onIndex, int _currentColorState){
+  bool swipeCheck(SwipeDirection direction, int _onIndex, List<String> colorStates){
     if(direction == SwipeDirection.down){
-      return(_onIndex+columns <= size-1 && 
-      !boxes[_onIndex+columns].isWall() && 
-      (boxes[_onIndex+columns].colorState==0 || 
-      boxes[_onIndex+columns].colorState==_currentColorState));
+      if(boxes[_onIndex+columns].isLock()){
+        return(_onIndex+columns <= size-1 && 
+        !boxes[_onIndex+columns].isWall() &&
+        colorStates.contains(boxes[_onIndex+columns].colorState.toLowerCase()));
+      }else {
+        return(_onIndex+columns <= size-1 && 
+        !boxes[_onIndex+columns].isWall());
+      } 
     }else if(direction == SwipeDirection.up){
-      return(_onIndex-columns >=0 && 
-      !boxes[_onIndex-columns].isWall() && 
-      (boxes[_onIndex-columns].colorState==0 || 
-      boxes[_onIndex-columns].colorState==_currentColorState));
+      if(boxes[_onIndex-columns].isLock()){
+        return(_onIndex-columns >=0 && 
+        !boxes[_onIndex-columns].isWall()&&
+        colorStates.contains(boxes[_onIndex-columns].colorState.toLowerCase()));  
+      }else {
+        return(_onIndex-columns >=0 && 
+        !boxes[_onIndex-columns].isWall());
+      }
     }else if(direction == SwipeDirection.right){
-      return((_onIndex+1)%columns != 0  && 
-      !boxes[_onIndex+1].isWall() && 
-      (boxes[_onIndex+1].colorState==0 || 
-      boxes[_onIndex+1].colorState==_currentColorState));
+      if(boxes[_onIndex+1].isLock()){
+        return((_onIndex+1)%columns != 0  && 
+        !boxes[_onIndex+1].isWall() &&
+        colorStates.contains(boxes[_onIndex+1].colorState.toLowerCase()));
+      }else {
+        return((_onIndex+1)%columns != 0  && 
+        !boxes[_onIndex+1].isWall());
+      }
     }else if(direction == SwipeDirection.left){
+      if(boxes[_onIndex-1].isLock()){
+        return(_onIndex%columns != 0 && 
+        !boxes[_onIndex-1].isWall() &&
+        colorStates.contains(boxes[_onIndex-1].colorState.toLowerCase()));
+      }
       return(_onIndex%columns != 0 && 
-      !boxes[_onIndex-1].isWall() && 
-      (boxes[_onIndex-1].colorState==0 || 
-      boxes[_onIndex-1].colorState==_currentColorState));
+      !boxes[_onIndex-1].isWall());
     }
     return false;
   }

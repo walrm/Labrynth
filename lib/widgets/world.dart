@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:string_validator/string_validator.dart';
 
 import '../screens/Game/box.dart';
 import '../screens/Game/grid.dart';
+
+
 
 class World {
   List<Grid> puzzles;
@@ -66,7 +69,7 @@ class World {
     g.size = rows*columns;
     g.boxes = new List<Box>(g.size);
     for(int l=0; l<g.boxes.length; l++){
-      g.boxes[l]=new Box(l,Colors.white,false,Type.normal,0);
+      g.boxes[l]=new Box(l,Colors.white,false,Type.normal,'0');
     }
 
     int j = 0;
@@ -78,6 +81,12 @@ class World {
         g.startIndex = j;
       }else if(s[i] == '?'){
         g.boxes[j].type = Type.end;
+      }else if(isAlpha(s[i]) && isLowercase(s[i])){
+        g.boxes[j].type = Type.key;
+        g.boxes[j].colorState = s[i];
+      }else if(isAlpha(s[i]) && isUppercase(s[i])){
+        g.boxes[j].type = Type.lock;
+        g.boxes[j].colorState = s[i];
       }
       j++;
       i++;

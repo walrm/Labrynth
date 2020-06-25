@@ -10,6 +10,8 @@ class Game extends StatefulWidget {
   final int currentWorld; //integer for the current world-starts from 1
   final int currentLevel; //Level number in the world-starts from 1
   final int numPuzzles;
+
+  List<String> colorStates = new List<String>();
   
   Game(this.grid,this.data,this.currentWorld,this.currentLevel, this.numPuzzles);
 
@@ -18,47 +20,53 @@ class Game extends StatefulWidget {
 }
 
 class GameState extends State<Game> {
-  int _currentColorState = 0;
   int _onIndex = 0;
   Color _currentColor = Colors.grey;
   Grid grid;
-
 
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
     if (direction == SwipeDirection.down &&
-        grid.swipeCheck(direction, _onIndex, _currentColorState)) {
+        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
       setState(() {
         grid.boxes[_onIndex].color = _currentColor;
         _onIndex += grid.columns;
         grid.boxes[_onIndex].visited = true;
+        if(grid.boxes[_onIndex].isKey())
+          widget.colorStates.add(grid.boxes[_onIndex].colorState);
       });
     } else if (direction == SwipeDirection.up &&
-        grid.swipeCheck(direction, _onIndex, _currentColorState)) //swipe up
+        grid.swipeCheck(direction, _onIndex, widget.colorStates)) //swipe up
       setState(() {
         grid.boxes[_onIndex].color = _currentColor;
         _onIndex -= grid.columns;
         grid.boxes[_onIndex].visited = true;
+        if(grid.boxes[_onIndex].isKey())
+          widget.colorStates.add(grid.boxes[_onIndex].colorState);
       });
   }
 
   _horizontalSwipe(SwipeDirection direction) {
     if (direction == SwipeDirection.right &&
-        grid.swipeCheck(direction, _onIndex, _currentColorState)) {
+        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
       //right swipe
       setState(() {
         grid.boxes[_onIndex].color = _currentColor;
         _onIndex += 1;
         grid.boxes[_onIndex].visited = true;
+        if(grid.boxes[_onIndex].isKey())
+          widget.colorStates.add(grid.boxes[_onIndex].colorState);
       });
     } else if (direction == SwipeDirection.left &&
-        grid.swipeCheck(direction, _onIndex, _currentColorState)) {
+        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
       //left swipe
       setState(() {
         grid.boxes[_onIndex].color = _currentColor;
         _onIndex -= 1;
         grid.boxes[_onIndex].visited = true;
+        if(grid.boxes[_onIndex].isKey())
+          widget.colorStates.add(grid.boxes[_onIndex].colorState);
       });
     }
   }
