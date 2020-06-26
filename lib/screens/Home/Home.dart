@@ -15,6 +15,7 @@ class Home extends StatefulWidget{
 
 class HomeScreen extends State<Home>{
   bool isSettings=false;
+  double opacity=0;
 
 
   Future<SaveState> initSaveState() async{
@@ -93,6 +94,7 @@ class HomeScreen extends State<Home>{
                               print('tapped');
                               setState(() {
                                 isSettings=true;
+                                opacity=1;
                                 print(isSettings);
                               });
                             },
@@ -155,14 +157,13 @@ class HomeScreen extends State<Home>{
                             ),
                           ),
                         ),
-                        if(isSettings)//Settings box, if visible
+
                           AnimatedOpacity(
-                            opacity: 1.0,
-                            
-                            duration: Duration(milliseconds: 250),
+                            opacity: opacity,
+                            duration: Duration(milliseconds: 125),
                             child: Align(
-                              alignment:Alignment.center,
-                              child: Container(
+                                alignment:Alignment.center,
+                              child: isSettings? Container(
                                 height: (screenHeight/2.5),
                                 width: (screenWidth/4)*3,
                                 padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
@@ -186,12 +187,14 @@ class HomeScreen extends State<Home>{
                                         ),
                                       ),
                                     ),
+                                    if(isSettings)
                                     Align(//Cancel button
                                       alignment: Alignment.bottomLeft,
                                       child:InkWell(
                                         onTap: (){
                                           setState(() {
                                             isSettings=false;
+                                            opacity=0;
                                           });
                                         },
                                         child:Container(
@@ -218,12 +221,14 @@ class HomeScreen extends State<Home>{
                                         ),
                                       ),
                                     ),
+                                    if(isSettings)
                                     Align(//Settings button
                                       alignment: Alignment.bottomRight,
                                       child:InkWell(
                                         onTap: (){
                                           setState(() {
                                             isSettings=false;
+                                            opacity=0;
                                           });
                                         },
                                         child:Container(
@@ -252,7 +257,7 @@ class HomeScreen extends State<Home>{
                                     ),
                                   ],
                                 )
-                              ),
+                              ):null,
                             ),
                           ),
                       ],
