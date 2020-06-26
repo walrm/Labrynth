@@ -27,57 +27,42 @@ class GameState extends State<Game> {
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
-    if (direction == SwipeDirection.down &&
-        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
-      setState(() {
-        grid.boxes[_onIndex].color = _currentColor;
+    if(grid.swipeCheck(direction, _onIndex, widget.colorStates)){
+      grid.boxes[_onIndex].color = _currentColor;
+      if(direction == SwipeDirection.down)
         _onIndex += grid.columns;
-        grid.boxes[_onIndex].visited = true;
-        if(grid.boxes[_onIndex].isKey())
-          widget.colorStates.add(grid.boxes[_onIndex].colorState);
-      });
-    } else if (direction == SwipeDirection.up &&
-        grid.swipeCheck(direction, _onIndex, widget.colorStates)) //swipe up
-      setState(() {
-        grid.boxes[_onIndex].color = _currentColor;
+      else if(direction == SwipeDirection.up)
         _onIndex -= grid.columns;
+      setState((){
         grid.boxes[_onIndex].visited = true;
         if(grid.boxes[_onIndex].isKey())
           widget.colorStates.add(grid.boxes[_onIndex].colorState);
-      });
-  }
-
-  _horizontalSwipe(SwipeDirection direction) {
-    if (direction == SwipeDirection.right &&
-        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
-      //right swipe
-      setState(() {
-        grid.boxes[_onIndex].color = _currentColor;
-        _onIndex += 1;
-        grid.boxes[_onIndex].visited = true;
-        if(grid.boxes[_onIndex].isKey())
-          widget.colorStates.add(grid.boxes[_onIndex].colorState);
-      });
-    } else if (direction == SwipeDirection.left &&
-        grid.swipeCheck(direction, _onIndex, widget.colorStates)) {
-      //left swipe
-      setState(() {
-        grid.boxes[_onIndex].color = _currentColor;
-        _onIndex -= 1;
-        grid.boxes[_onIndex].visited = true;
-        if(grid.boxes[_onIndex].isKey())
-          widget.colorStates.add(grid.boxes[_onIndex].colorState);
+        else if(grid.boxes[_onIndex].isTrap())
+          widget.colorStates = [];
       });
     }
   }
 
+  _horizontalSwipe(SwipeDirection direction) {
+    if(grid.swipeCheck(direction, _onIndex, widget.colorStates)){
+      grid.boxes[_onIndex].color = _currentColor;
+      if(direction == SwipeDirection.right)
+        _onIndex += 1;
+      else if(direction == SwipeDirection.left)
+        _onIndex -= 1;
+      setState((){
+        grid.boxes[_onIndex].visited = true;
+        if(grid.boxes[_onIndex].isKey())
+          widget.colorStates.add(grid.boxes[_onIndex].colorState);
+        else if(grid.boxes[_onIndex].isTrap())
+          widget.colorStates = [];
+      });
+    }
+
+  }
+
   void updateInfo(){
     widget.data.stars++;
-    // String s = widget.data.levelStr[widget.currentWorld-1];
-    // String replaced = s.substring(0,widget.currentLevel-1)+'3'+s.substring(widget.currentLevel);
-    // if(widget.currentLevel+1 < s.length && s.substring(widget.currentLevel,widget.currentLevel+1)=='4'){ //unlocks next level if the current level is locked
-    //   replaced=replaced.substring(0,widget.currentLevel)+'0'+replaced.substring(widget.currentLevel+1);
-    // }else 
     print(widget.currentLevel);
     if(widget.currentLevel+1 == widget.numPuzzles){ //unlock the next world if completed last level in current world
       widget.data.levelStr.add('0');
@@ -85,7 +70,6 @@ class GameState extends State<Game> {
       widget.data.levelStr[widget.currentWorld] += "0";
     }
     widget.data.coins++;
-    // widget.data.levelStr[widget.currentWorld-1]=replaced;
     widget.data.write();
   }
 

@@ -87,6 +87,8 @@ class World {
       }else if(isAlpha(s[i]) && isUppercase(s[i])){
         g.boxes[j].type = Type.lock;
         g.boxes[j].colorState = s[i];
+      }else if(s[i] == '^'){
+        g.boxes[j].type = Type.trap;
       }
       j++;
       i++;

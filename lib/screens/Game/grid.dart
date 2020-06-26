@@ -18,43 +18,29 @@ class Grid{
   }
 
   bool swipeCheck(SwipeDirection direction, int _onIndex, List<String> colorStates){
+    bool rangeCheck;
+    int newIndex;
     if(direction == SwipeDirection.down){
-      if(boxes[_onIndex+columns].isLock()){
-        return(_onIndex+columns <= size-1 && 
-        !boxes[_onIndex+columns].isWall() &&
-        colorStates.contains(boxes[_onIndex+columns].colorState.toLowerCase()));
-      }else {
-        return(_onIndex+columns <= size-1 && 
-        !boxes[_onIndex+columns].isWall());
-      } 
+      rangeCheck = _onIndex+columns <= size-1;
+      newIndex = _onIndex+columns;
     }else if(direction == SwipeDirection.up){
-      if(boxes[_onIndex-columns].isLock()){
-        return(_onIndex-columns >=0 && 
-        !boxes[_onIndex-columns].isWall()&&
-        colorStates.contains(boxes[_onIndex-columns].colorState.toLowerCase()));  
-      }else {
-        return(_onIndex-columns >=0 && 
-        !boxes[_onIndex-columns].isWall());
-      }
+      rangeCheck = _onIndex-columns >=0;
+      newIndex = _onIndex-columns;
     }else if(direction == SwipeDirection.right){
-      if(boxes[_onIndex+1].isLock()){
-        return((_onIndex+1)%columns != 0  && 
-        !boxes[_onIndex+1].isWall() &&
-        colorStates.contains(boxes[_onIndex+1].colorState.toLowerCase()));
-      }else {
-        return((_onIndex+1)%columns != 0  && 
-        !boxes[_onIndex+1].isWall());
-      }
+      rangeCheck = (_onIndex+1)%columns != 0;
+      newIndex = _onIndex+1;
     }else if(direction == SwipeDirection.left){
-      if(boxes[_onIndex-1].isLock()){
-        return(_onIndex%columns != 0 && 
-        !boxes[_onIndex-1].isWall() &&
-        colorStates.contains(boxes[_onIndex-1].colorState.toLowerCase()));
-      }
-      return(_onIndex%columns != 0 && 
-      !boxes[_onIndex-1].isWall());
+      rangeCheck = _onIndex%columns != 0;
+      newIndex = _onIndex-1;
     }
-    return false;
+
+    if(!rangeCheck)
+      return false;
+    else if(boxes[newIndex].isLock()){
+      return(!boxes[newIndex].isWall() && 
+      colorStates.contains(boxes[newIndex].colorState.toLowerCase()));
+    }
+    return !boxes[newIndex].isWall();
   }
   
   bool checkWin(index){

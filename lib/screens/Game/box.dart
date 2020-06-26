@@ -6,7 +6,8 @@ enum Type{
     lock,
     start,
     end,
-    wall
+    wall,
+    trap
 }
 class Box extends StatelessWidget{
   int index;
@@ -28,10 +29,12 @@ class Box extends StatelessWidget{
     Text text;
     if(this.type==Type.end){
       text = Text('?');
-    }else if(this.type == Type.key){
+    }else if(isKey()){
       text = Text(this.colorState);
-    }else if(this.type == Type.lock){
+    }else if(isLock()){
       text = Text(this.colorState);
+    }else if(isTrap()){
+      text = Text('^');
     }
 
     if(isWall()){
@@ -56,6 +59,10 @@ class Box extends StatelessWidget{
 
   bool isLock(){
     return this.type == Type.lock;
+  }
+
+  bool isTrap(){
+    return this.type == Type.trap;
   }
 
   void setColor(String s){
