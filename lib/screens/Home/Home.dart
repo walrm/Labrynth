@@ -13,9 +13,9 @@ class Home extends StatefulWidget {
 class HomeScreen extends State<Home> {
   bool isSettings = false;
   double opacity = 0;
-  int currentVolume;
+  //int currentVolume;
   int volume = 0;
-  bool notifications;
+  bool notifications=false;
 
   Future<SaveState> initSaveState() async {
     SaveState save = new SaveState();
@@ -363,8 +363,6 @@ class HomeScreen extends State<Home> {
                                               setState(() {
                                                 snapshot.data.volume = volume;
                                                 snapshot.data.notifications=notifications;
-                                                print("Notifications");
-                                                print(notifications);
                                                 snapshot.data.write();
                                                 isSettings = false;
                                                 opacity = 0;
