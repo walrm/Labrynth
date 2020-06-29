@@ -11,7 +11,7 @@ class Game extends StatefulWidget {
   final int currentLevel; //Level number in the world-starts from 1
   final int numPuzzles;
 
-  List<String> colorStates = new List<String>();
+  String colorState = "";
   
   Game(this.grid,this.data,this.currentWorld,this.currentLevel, this.numPuzzles);
 
@@ -27,7 +27,7 @@ class GameState extends State<Game> {
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
-    if(grid.swipeCheck(direction, _onIndex, widget.colorStates)){
+    if(grid.swipeCheck(direction, _onIndex, widget.colorState)){
       grid.boxes[_onIndex].color = _currentColor;
       if(direction == SwipeDirection.down)
         _onIndex += grid.columns;
@@ -36,15 +36,16 @@ class GameState extends State<Game> {
       setState((){
         grid.boxes[_onIndex].visited = true;
         if(grid.boxes[_onIndex].isKey())
-          widget.colorStates.add(grid.boxes[_onIndex].colorState);
+          widget.colorState = grid.boxes[_onIndex].colorState;
         else if(grid.boxes[_onIndex].isTrap())
-          widget.colorStates = [];
+          widget.colorState = "";
+          print(widget.colorState);
       });
     }
   }
 
   _horizontalSwipe(SwipeDirection direction) {
-    if(grid.swipeCheck(direction, _onIndex, widget.colorStates)){
+    if(grid.swipeCheck(direction, _onIndex, widget.colorState)){
       grid.boxes[_onIndex].color = _currentColor;
       if(direction == SwipeDirection.right)
         _onIndex += 1;
@@ -53,9 +54,10 @@ class GameState extends State<Game> {
       setState((){
         grid.boxes[_onIndex].visited = true;
         if(grid.boxes[_onIndex].isKey())
-          widget.colorStates.add(grid.boxes[_onIndex].colorState);
+         widget.colorState = grid.boxes[_onIndex].colorState;
         else if(grid.boxes[_onIndex].isTrap())
-          widget.colorStates = [];
+          widget.colorState = "";
+          print(widget.colorState);
       });
     }
 

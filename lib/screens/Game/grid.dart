@@ -17,7 +17,7 @@ class Grid{
     }
   }
 
-  bool swipeCheck(SwipeDirection direction, int _onIndex, List<String> colorStates){
+  bool swipeCheck(SwipeDirection direction, int _onIndex, String colorState){
     bool rangeCheck;
     int newIndex;
     if(direction == SwipeDirection.down){
@@ -38,7 +38,7 @@ class Grid{
       return false;
     else if(boxes[newIndex].isLock()){
       return(!boxes[newIndex].isWall() && 
-      colorStates.contains(boxes[newIndex].colorState.toLowerCase()));
+      colorState == (boxes[newIndex].colorState.toLowerCase()));
     }
     return !boxes[newIndex].isWall();
   }
