@@ -12,6 +12,10 @@ class Game extends StatefulWidget {
   final int numPuzzles;
 
   String colorState = "";
+
+  reset(){
+    grid.reset();
+  }
   
   Game(this.grid,this.data,this.currentWorld,this.currentLevel, this.numPuzzles);
 
@@ -20,44 +24,41 @@ class Game extends StatefulWidget {
 }
 
 class GameState extends State<Game> {
-  int _onIndex = 0;
-  Color _currentColor = Colors.grey;
   Grid grid;
+  Color _currentColor = Colors.grey;
 
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
-    if(grid.swipeCheck(direction, _onIndex, widget.colorState)){
-      grid.boxes[_onIndex].color = _currentColor;
+    if(grid.swipeCheck(direction, grid.onIndex, widget.colorState)){
+      grid.boxes[grid.onIndex].color = _currentColor;
       if(direction == SwipeDirection.down)
-        _onIndex += grid.columns;
+        grid.onIndex += grid.columns;
       else if(direction == SwipeDirection.up)
-        _onIndex -= grid.columns;
+        grid.onIndex -= grid.columns;
       setState((){
-        grid.boxes[_onIndex].visited = true;
-        if(grid.boxes[_onIndex].isKey())
-          widget.colorState = grid.boxes[_onIndex].colorState;
-        else if(grid.boxes[_onIndex].isTrap())
+        grid.boxes[grid.onIndex].visited = true;
+        if(grid.boxes[grid.onIndex].isKey())
+          widget.colorState = grid.boxes[grid.onIndex].colorState;
+        else if(grid.boxes[grid.onIndex].isTrap())
           widget.colorState = "";
-          print(widget.colorState);
       });
     }
   }
 
   _horizontalSwipe(SwipeDirection direction) {
-    if(grid.swipeCheck(direction, _onIndex, widget.colorState)){
-      grid.boxes[_onIndex].color = _currentColor;
+    if(grid.swipeCheck(direction, grid.onIndex, widget.colorState)){
+      grid.boxes[grid.onIndex].color = _currentColor;
       if(direction == SwipeDirection.right)
-        _onIndex += 1;
+        grid.onIndex += 1;
       else if(direction == SwipeDirection.left)
-        _onIndex -= 1;
+        grid.onIndex -= 1;
       setState((){
-        grid.boxes[_onIndex].visited = true;
-        if(grid.boxes[_onIndex].isKey())
-         widget.colorState = grid.boxes[_onIndex].colorState;
-        else if(grid.boxes[_onIndex].isTrap())
+        grid.boxes[grid.onIndex].visited = true;
+        if(grid.boxes[grid.onIndex].isKey())
+         widget.colorState = grid.boxes[grid.onIndex].colorState;
+        else if(grid.boxes[grid.onIndex].isTrap())
           widget.colorState = "";
-          print(widget.colorState);
       });
     }
 
@@ -78,7 +79,7 @@ class GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    if (grid.checkWin(_onIndex)) {
+    if (grid.checkWin(grid.onIndex)) {
       updateInfo();
       return LevelComplete();
     } 
@@ -93,7 +94,7 @@ class GameState extends State<Game> {
             physics: new NeverScrollableScrollPhysics(),
             crossAxisCount: grid.columns,
             children: List.generate(grid.size, (index) {
-              if (index == _onIndex) {
+              if (index == grid.onIndex) {
                 return Container(
                   color: _currentColor,
                   child: Center(child: Icon(Icons.sentiment_neutral)));
@@ -101,18 +102,6 @@ class GameState extends State<Game> {
               return grid.boxes[index];
             }),
           ),
-          Center(
-            child: IconButton(
-              iconSize: 120,
-              icon: Icon(Icons.refresh),
-              onPressed: (){
-                setState((){
-                  grid.reset();
-                  _onIndex = grid.startIndex;
-                });
-              },
-            )
-          )
         ],
       )
     );

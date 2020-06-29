@@ -8,12 +8,14 @@ class Grid{
   int numLocks;
   int columns;
   int startIndex;
+  int onIndex;
   List<Box> boxes;
 
   reset(){
+    onIndex = startIndex;
     for(int l=0; l<boxes.length; l++){
-      if(boxes[l].type == Type.normal)
-        boxes[l]=new Box(l,Colors.white,false,Type.normal,'0');
+      if(boxes[l].type != Type.wall)
+        boxes[l]=new Box(l,Colors.white,false,boxes[l].type,boxes[l].colorState);
     }
   }
 

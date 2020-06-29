@@ -318,7 +318,7 @@ class HomeScreen extends State<Home> {
                                               Colors.black, -1),
                                           Spacer(),
                                           SizedBox(width:33),
-                                          // notificationIcon(notifications),
+                                          notificationIcon(notifications),
                                           SizedBox(width: 40,),
                                         ],
                                       ),

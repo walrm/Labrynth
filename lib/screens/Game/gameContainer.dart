@@ -21,8 +21,21 @@ class GameContainer extends StatefulWidget {
 class GameContainerState extends State<GameContainer>{
   @override
   Widget build(BuildContext context){
+    Game game = Game(widget.grid, widget.data, widget.currentWorld, widget.currentLevel, widget.numPuzzles);
     return Scaffold(
-      appBar: AppBar(title: Text('Game')),
+      appBar: AppBar(
+        title: Text('Game'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: (){
+              setState((){
+                game.reset();
+              });
+            },
+          )
+        ],
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -30,7 +43,7 @@ class GameContainerState extends State<GameContainer>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Game(widget.grid, widget.data, widget.currentWorld, widget.currentLevel, widget.numPuzzles),
+            game
           ]
         ),
       )
