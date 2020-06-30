@@ -79,6 +79,7 @@ class World {
       }else if(s[i] == '@'){
         g.boxes[j].type = Type.start;
         g.startIndex = j;
+        g.onIndex = j;
       }else if(s[i] == '?'){
         g.boxes[j].type = Type.end;
       }else if(isAlpha(s[i]) && isLowercase(s[i])){
