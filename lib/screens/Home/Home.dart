@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../widgets/saveState.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Labrynth_test/screens/Home/Homepage.dart';
@@ -103,6 +102,7 @@ class HomeScreen extends State<Home> {
         }
         break;
     }
+    return null;
   }
 
   @override
@@ -138,7 +138,7 @@ class HomeScreen extends State<Home> {
                           ignoring: isSettings,
                           child: Align(
                             //Play Button
-                            alignment: Alignment(0, -.3),
+                            alignment: Alignment(0, .42),
                             child: InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -147,8 +147,8 @@ class HomeScreen extends State<Home> {
                                         builder: (context) => Homepage()));
                               },
                               child: Container(
-                                height: 80,
-                                width: 200,
+                                height: 60,
+                                width: 150,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -162,13 +162,14 @@ class HomeScreen extends State<Home> {
                                   ),
                                   border:
                                       Border.all(width: 6, color: Colors.black),
+                                      borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                     'Play',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 40,
+                                      fontSize: 32,
                                     ),
                                   ),
                                 ),
@@ -180,7 +181,7 @@ class HomeScreen extends State<Home> {
                           //Settings Button
                           ignoring: isSettings,
                           child: Align(
-                            alignment: Alignment(0, .1),
+                            alignment: Alignment(-0.7, .7),
                             child: InkWell(
                               onTap: () {
                                 setState(() {
@@ -191,8 +192,8 @@ class HomeScreen extends State<Home> {
                                 });
                               },
                               child: Container(
-                                height: 80,
-                                width: 200,
+                                height: 60,
+                                width: 150,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -206,13 +207,14 @@ class HomeScreen extends State<Home> {
                                   ),
                                   border:
                                       Border.all(width: 6, color: Colors.black),
+                                      borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                     'Settings',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 40,
+                                      fontSize: 32,
                                     ),
                                   ),
                                 ),
@@ -224,15 +226,15 @@ class HomeScreen extends State<Home> {
                           ignoring: isSettings,
                           child: Align(
                             //Shop Button
-                            alignment: Alignment(0, .5),
+                            alignment: Alignment(0.7, .7),
                             child: InkWell(
                               onTap: () {
                                 if (!isSettings) {
                                 } else {}
                               },
                               child: Container(
-                                height: 80,
-                                width: 200,
+                                height: 60,
+                                width: 150,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -246,13 +248,14 @@ class HomeScreen extends State<Home> {
                                   ),
                                   border:
                                       Border.all(width: 6, color: Colors.black),
+                                      borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                     'Shop',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 40,
+                                      fontSize: 32,
                                     ),
                                   ),
                                 ),
@@ -325,7 +328,7 @@ class HomeScreen extends State<Home> {
                                       Spacer(),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           InkWell(
                                             onTap: () {
@@ -356,7 +359,7 @@ class HomeScreen extends State<Home> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 15,
+                                            width: 22,
                                           ),
                                           InkWell(
                                             onTap: () {

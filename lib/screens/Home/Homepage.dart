@@ -96,61 +96,57 @@ class Homestate extends State<Homepage> {
                   },
                   itemCount: Homepage.totalWorlds, // Can be null
                 ),
-                Positioned(
+                Align(
                   //Box to hold coins
-                  top: 40,
-                  right: 10,
+                  alignment: Alignment(-.7,-.95),
                   child: Container(
                     width: 80,
                     height: 40,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(
+                        width: 3,
+                        color: Colors.black.withOpacity(.8),
+                      ),
+                      color: Colors.white.withOpacity(.8),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Stack(
-                          children: <Widget>[
-                            Text(
-                              '${snapshot.data.coins}',
-                              style: TextStyle(
-                                letterSpacing: 1,
-                                fontSize: 24,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 3
-                                  ..color = Colors.black,
-                              ),
+                      child: Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Stack(
+                              children: <Widget>[
+                                Text(
+                                  '${snapshot.data.coins}',
+                                  style: TextStyle(
+                                    letterSpacing: -2,
+                                    fontSize: 26,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              '${snapshot.data.coins}',
-                              style: TextStyle(
-                                letterSpacing: 1,
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ]
                       ),
                     ),
                   ),
                 ),
-                Positioned(
+                Align(
                   // Box to hold gems
-                  top: 82,
-                  right: 10,
+                  alignment: Alignment(0,-.95),
                   child: Container(
                     width: 80,
                     height: 40,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(
+                        color: Colors.black.withOpacity(.8),
+                        width: 3,
+                      ),
+                      color: Colors.white.withOpacity(.8),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(6, 2, 6, 2),
@@ -161,24 +157,9 @@ class Homestate extends State<Homepage> {
                             child: Text(
                               '${snapshot.data.gems}',
                               style: TextStyle(
-                                fontSize: 20,
-                                letterSpacing: 1,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 4
-                                  ..color = Colors.black,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '${snapshot.data.gems}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                fontSize: 20,
-                                color: Colors.white,
+                                letterSpacing: -2,
+                                fontSize: 26,
+                                color: Colors.black,
                               ),
                             ),
                           ),
