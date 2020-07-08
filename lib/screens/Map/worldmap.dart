@@ -51,6 +51,7 @@ class Worldmap extends State<Map>{
                       while(navigationResult == 'next' && widget.onIndex+1 < widget.world.puzzles.length) {
                         setState((){
                           widget.onIndex++;
+                          widget.world.puzzles[widget.onIndex].reset();
                         });
                         navigationResult = await Navigator.push(context, MaterialPageRoute(
                           builder: (context) => GameContainer(

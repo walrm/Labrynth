@@ -38,8 +38,10 @@ class GameState extends State<Game> {
         grid.onIndex -= grid.columns;
       setState((){
         grid.boxes[grid.onIndex].visited = true;
-        if(grid.boxes[grid.onIndex].isKey())
+        if(grid.boxes[grid.onIndex].isKey()){
           widget.colorState = grid.boxes[grid.onIndex].colorState;
+          _currentColor = grid.boxes[grid.onIndex].color;
+        }
         else if(grid.boxes[grid.onIndex].isTrap())
           widget.colorState = "";
       });
@@ -55,8 +57,10 @@ class GameState extends State<Game> {
         grid.onIndex -= 1;
       setState((){
         grid.boxes[grid.onIndex].visited = true;
-        if(grid.boxes[grid.onIndex].isKey())
+        if(grid.boxes[grid.onIndex].isKey()){
          widget.colorState = grid.boxes[grid.onIndex].colorState;
+         _currentColor = grid.boxes[grid.onIndex].color;
+        }
         else if(grid.boxes[grid.onIndex].isTrap())
           widget.colorState = "";
       });

@@ -16,6 +16,37 @@ class Grid{
     for(int l=0; l<boxes.length; l++){
       if(boxes[l].type != Type.wall)
         boxes[l]=new Box(l,Colors.white,false,boxes[l].type,boxes[l].colorState);
+      if(boxes[l].isKey() || boxes[l].isLock())
+        assignColor(boxes[l].colorState.toLowerCase(), boxes, l);
+    }
+  }
+
+  assignColor(String letter, List<Box> boxes, int j){
+    switch(letter){
+      case "a":
+        boxes[j].color = Colors.green;
+        break;
+      case "b":
+        boxes[j].color = Colors.blue;
+        break;
+      case "c":
+        boxes[j].color = Colors.orange;
+        break;
+      case "d":
+        boxes[j].color = Colors.red;
+        break;
+      case "e":
+        boxes[j].color = Colors.purple;
+        break;
+      case "f":
+        boxes[j].color = Colors.yellow;
+        break;
+      case "g":
+        boxes[j].color = Colors.brown;
+        break;
+      case "h":
+        boxes[j].color = Colors.pink;
+        break;
     }
   }
 
