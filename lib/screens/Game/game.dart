@@ -12,6 +12,7 @@ class Game extends StatefulWidget {
   final int currentWorld; //integer for the current world-starts from 1
   final int currentLevel; //Level number in the world-starts from 1
   final int numPuzzles;
+  bool win = false;
   int opacity=0;
   String colorState = "";
 
@@ -96,6 +97,7 @@ class GameState extends State<Game> {
   Widget build(BuildContext context) {
     if (grid.checkWin(grid.onIndex)) {
       setState(() {
+        widget.win = true;
         this.opacity=1;
         updateInfo();
       });

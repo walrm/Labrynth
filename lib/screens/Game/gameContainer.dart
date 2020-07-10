@@ -30,9 +30,11 @@ class GameContainerState extends State<GameContainer>{
               icon: Icon(Icons.refresh),
               disabledColor: Colors.white,
               onPressed: (){
-                setState((){
-                  game.reset();
-                });
+                if(!game.win){
+                  setState((){
+                    game.reset();
+                  });
+                }
               },
             ),
         ],
