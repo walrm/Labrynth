@@ -1,7 +1,9 @@
+import 'package:Labrynth_test/screens/Game/gameContainer.dart';
 import 'package:Labrynth_test/screens/Game/levelcomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'grid.dart';
+import 'box.dart';
 import '../../widgets/saveState.dart';
 
 class Game extends StatefulWidget {
@@ -10,26 +12,30 @@ class Game extends StatefulWidget {
   final int currentWorld; //integer for the current world-starts from 1
   final int currentLevel; //Level number in the world-starts from 1
   final int numPuzzles;
-
+  int opacity=0;
   String colorState = "";
 
-  reset(){
-    grid.reset();
-  }
+
   
   Game(this.grid,this.data,this.currentWorld,this.currentLevel, this.numPuzzles);
 
   @override
   GameState createState() => GameState(grid);
+  
+  reset(){
+    if(GameState(grid).opacity==0)
+      grid.reset();
+  }
 }
 
 class GameState extends State<Game> {
   Grid grid;
   Color _currentColor = Colors.grey;
-
+  double opacity=0;
   GameState(this.grid);
 
   _vertSwipe(SwipeDirection direction) {
+
     if(grid.swipeCheck(direction, grid.onIndex, widget.colorState)){
       grid.boxes[grid.onIndex].color = _currentColor;
       if(direction == SwipeDirection.down)
@@ -65,7 +71,6 @@ class GameState extends State<Game> {
           widget.colorState = "";
       });
     }
-
   }
 
   void updateInfo(){
@@ -82,32 +87,60 @@ class GameState extends State<Game> {
 
 
   @override
+  Widget test(){
+    print ("true");
+    return AppBar(
+      title:Text("Test"),
+    );
+  }
   Widget build(BuildContext context) {
     if (grid.checkWin(grid.onIndex)) {
-      updateInfo();
-      return LevelComplete();
-    } 
-    return SimpleGestureDetector(
-      onVerticalSwipe: _vertSwipe,
-      onHorizontalSwipe: _horizontalSwipe,
-      child: Column(
-        children: <Widget>[
-          GridView.count(
-            childAspectRatio: grid.size/grid.columns/grid.columns,
-            shrinkWrap: true,
-            physics: new NeverScrollableScrollPhysics(),
-            crossAxisCount: grid.columns,
-            children: List.generate(grid.size, (index) {
-              if (index == grid.onIndex) {
-                return Container(
-                  color: _currentColor,
-                  child: Center(child: Icon(Icons.sentiment_neutral)));
-              }
-              return grid.boxes[index];
-            }),
+      setState(() {
+        this.opacity=1;
+        updateInfo();
+      });
+    }
+
+    return Stack(
+      children:<Widget>[
+        IgnorePointer(
+          ignoring: grid.checkWin(grid.onIndex),
+          child: SimpleGestureDetector(
+            onVerticalSwipe: _vertSwipe,
+            onHorizontalSwipe: _horizontalSwipe,
+            child: Column(
+              children: <Widget>[
+                GridView.count(
+                  childAspectRatio: grid.size/grid.columns/grid.columns,
+                  shrinkWrap: true,
+                  physics: new NeverScrollableScrollPhysics(),
+                  crossAxisCount: grid.columns,
+                  children: List.generate(grid.size, (index) {
+                    if (index == grid.onIndex) {
+                      return Container(
+                        color: _currentColor,
+                        child: Center(child: Icon(Icons.sentiment_neutral)));
+                    }
+                    if(index!=grid.onIndex && grid.boxes[grid.onIndex].type==Type.star){
+                      return Container(
+                      );
+                    }
+                    return grid.boxes[index];
+                  }),
+                ),
+              ],
+            )
           ),
-        ],
-      )
+        ),
+        IgnorePointer(
+          ignoring: !grid.checkWin(grid.onIndex),
+          child: AnimatedOpacity(
+            opacity: opacity,
+            duration: Duration(milliseconds: 125),
+            child:LevelComplete(),
+          ),
+        ),
+      ],
     );
   }
 }

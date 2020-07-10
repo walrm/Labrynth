@@ -7,16 +7,21 @@ enum Type{
     start,
     end,
     wall,
-    trap
+    trap,
+    star
 }
+
 class Box extends StatelessWidget{
   int index;
   Color color;
   bool visited;
+  bool hasStar;
   String colorState;
   Type type;
 
-  Box(this.index, this.color, this.visited, this.type, this.colorState);
+  Box(this.index, this.color, this.visited, this.type, this.colorState){
+    hasStar=false;
+  }
 
   void reachedKey(Color c){
     if(visited){
@@ -67,22 +72,28 @@ class Box extends StatelessWidget{
 
   void setColor(String s){
     switch(s){
-      case 'r':{ this.color=Colors.red;}
+      case 'a':{ this.color=Colors.green;}
       break;
       
       case 'b':{this.color=Colors.blue;}
       break;
       
-      case 'g':{this.color=Colors.green;}
+      case 'c':{this.color=Colors.orange;}
       break;
     
-      case 'o':{this.color=Colors.orange;}
+      case 'd':{this.color=Colors.red;}
       break;
 
-      case 'y':{this.color=Colors.yellow;}
+      case 'e':{this.color=Colors.purple;}
       break;
 
-      case 'p':{this.color=Colors.pink;}
+      case 'f':{this.color=Colors.yellow;}
+      break;
+
+      case 'g':{this.color=Colors.brown;}
+      break;
+
+      case 'h':{this.color=Colors.pink;}
       break;
 
     }

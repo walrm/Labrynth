@@ -82,6 +82,9 @@ class World {
         g.onIndex = j;
       }else if(s[i] == '?'){
         g.boxes[j].type = Type.end;
+      }else if(s[i]=='*'){
+        g.boxes[j].type=Type.star;
+        g.boxes[j].hasStar=true;
       }else if(isAlpha(s[i]) && isLowercase(s[i])){
         g.boxes[j].type = Type.key;
         g.boxes[j].colorState = s[i];

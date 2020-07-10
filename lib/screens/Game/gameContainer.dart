@@ -23,20 +23,21 @@ class GameContainerState extends State<GameContainer>{
   Widget build(BuildContext context){
     Game game = Game(widget.grid, widget.data, widget.currentWorld, widget.currentLevel, widget.numPuzzles);
     return Scaffold(
-      appBar: AppBar(
+      appBar:AppBar(
         title: Text('Game'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: (){
-              setState((){
-                game.reset();
-              });
-            },
-          )
+            IconButton(
+              icon: Icon(Icons.refresh),
+              disabledColor: Colors.white,
+              onPressed: (){
+                setState((){
+                  game.reset();
+                });
+              },
+            ),
         ],
       ),
-      body: Container(
+      body:Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -44,9 +45,9 @@ class GameContainerState extends State<GameContainer>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             game
-          ]
+          ],
         ),
-      )
+      ),
     );
   }
 }
